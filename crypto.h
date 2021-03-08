@@ -1,0 +1,1 @@
+/* This file for structure and class manufacture*/

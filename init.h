@@ -6,5 +6,6 @@
 
 
 #define THREADS std::thread::hardware_concurrency()
+FILE  *Pcrypto_finder;
 
-/*This file for headers initialize*/
+/*This file for headers and data initialize*/

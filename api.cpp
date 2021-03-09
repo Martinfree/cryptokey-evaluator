@@ -10,7 +10,7 @@ In this part you may see:
   main function normally call with parametrs place -h to help
 */
 
-void crypto_init(char* i);
+int crypto_finder(char* i);
 
 
 int main (int argc, char* argv[]){
@@ -20,7 +20,7 @@ int main (int argc, char* argv[]){
       printf("hello i'm your api");
 
     else if ( argv[1] == std::string("-c") )
-      crypto_init(argv[2]);
+      crypto_finder(argv[2]);
 
     else if ( argv[1] == std::string("-h") )
       printf("manual must be here");
@@ -34,6 +34,12 @@ int main (int argc, char* argv[]){
 }
 
 // useless function
-void crypto_init(char* i){
-  return;
+int crypto_finder(char* i){
+
+  if ((Pcrypto_finder = popen("find.exe","wb")) == NULL)
+      return EXIT_FAILURE;
+  else
+      pclose(Pcrypto_finder);
+
+  return EXIT_SUCCESS;
 }

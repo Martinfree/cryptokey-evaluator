@@ -51,7 +51,7 @@ int crypto_finder(char* i){
        puts(buffer);
       }
       pclose(Pcrypto_finder);
-      
+
       delete buffer;
 
   return EXIT_SUCCESS;

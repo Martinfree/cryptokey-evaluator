@@ -6,5 +6,8 @@
 
 
 #define THREADS std::thread::hardware_concurrency()
+#define MAXIMUM_BUFFER 1024
 
-/*This file for headers initialize*/
+FILE  *Pcrypto_finder;
+
+/*This file for headers and data initialize*/

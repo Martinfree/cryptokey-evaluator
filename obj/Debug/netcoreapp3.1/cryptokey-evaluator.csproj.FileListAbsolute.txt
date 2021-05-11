@@ -1,0 +1,15 @@
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.exe
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.deps.json
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.runtimeconfig.json
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.runtimeconfig.dev.json
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.dll
+C:\cryptokey-evaluator\bin\Debug\netcoreapp3.1\cryptokey-evaluator.pdb
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.csprojAssemblyReference.cache
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey_evaluator.Form1.resources
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.csproj.GenerateResource.cache
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.AssemblyInfoInputs.cache
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.AssemblyInfo.cs
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.csproj.CoreCompileInputs.cache
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.dll
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.pdb
+C:\cryptokey-evaluator\obj\Debug\netcoreapp3.1\cryptokey-evaluator.genruntimeconfig.cache

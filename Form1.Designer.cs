@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace cryptokey_evaluator
 {
     partial class Form1
@@ -45,11 +47,11 @@ namespace cryptokey_evaluator
             this.CypherTextBox = new System.Windows.Forms.TextBox();
             this.CypherLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.PowerShellTextBox = new System.Windows.Forms.TextBox();
-            this.ResultListBox = new System.Windows.Forms.ListBox();
-            this.ResultProgressBar = new System.Windows.Forms.ProgressBar();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ResultLabel = new System.Windows.Forms.Label();
+            this.ResultProgressBar = new System.Windows.Forms.ProgressBar();
+            this.PowerShellTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ResultTreeView = new System.Windows.Forms.TreeView();
             this.InputGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -96,6 +98,7 @@ namespace cryptokey_evaluator
             this.Startbutton.TabIndex = 1;
             this.Startbutton.Text = "Start";
             this.Startbutton.UseVisualStyleBackColor = true;
+            this.Startbutton.Click += new System.EventHandler(this.Startbutton_Click);
             // 
             // FileRadioButton
             // 
@@ -209,8 +212,8 @@ namespace cryptokey_evaluator
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ResultTreeView);
             this.groupBox1.Controls.Add(this.ResultLabel);
-            this.groupBox1.Controls.Add(this.ResultListBox);
             this.groupBox1.Controls.Add(this.ResultProgressBar);
             this.groupBox1.Location = new System.Drawing.Point(325, 12);
             this.groupBox1.Name = "groupBox1";
@@ -218,6 +221,23 @@ namespace cryptokey_evaluator
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Результати";
+            // 
+            // ResultLabel
+            // 
+            this.ResultLabel.AutoSize = true;
+            this.ResultLabel.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ResultLabel.Location = new System.Drawing.Point(103, 70);
+            this.ResultLabel.Name = "ResultLabel";
+            this.ResultLabel.Size = new System.Drawing.Size(83, 59);
+            this.ResultLabel.TabIndex = 2;
+            this.ResultLabel.Text = "0%";
+            // 
+            // ResultProgressBar
+            // 
+            this.ResultProgressBar.Location = new System.Drawing.Point(7, 381);
+            this.ResultProgressBar.Name = "ResultProgressBar";
+            this.ResultProgressBar.Size = new System.Drawing.Size(294, 23);
+            this.ResultProgressBar.TabIndex = 0;
             // 
             // PowerShellTextBox
             // 
@@ -232,25 +252,6 @@ namespace cryptokey_evaluator
             this.PowerShellTextBox.Text = "Hello I\'m your PowerShell like console >";
             this.PowerShellTextBox.Click += new System.EventHandler(this.PowerShellTextBox_Click);
             // 
-            // ResultListBox
-            // 
-            this.ResultListBox.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ResultListBox.FormattingEnabled = true;
-            this.ResultListBox.ItemHeight = 12;
-            this.ResultListBox.Items.AddRange(new object[] {
-            "Поки нічого робити"});
-            this.ResultListBox.Location = new System.Drawing.Point(6, 219);
-            this.ResultListBox.Name = "ResultListBox";
-            this.ResultListBox.Size = new System.Drawing.Size(294, 148);
-            this.ResultListBox.TabIndex = 1;
-            // 
-            // ResultProgressBar
-            // 
-            this.ResultProgressBar.Location = new System.Drawing.Point(7, 381);
-            this.ResultProgressBar.Name = "ResultProgressBar";
-            this.ResultProgressBar.Size = new System.Drawing.Size(294, 23);
-            this.ResultProgressBar.TabIndex = 0;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.PowerShellTextBox);
@@ -261,15 +262,12 @@ namespace cryptokey_evaluator
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Область управління";
             // 
-            // ResultLabel
+            // ResultTreeView
             // 
-            this.ResultLabel.AutoSize = true;
-            this.ResultLabel.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ResultLabel.Location = new System.Drawing.Point(103, 70);
-            this.ResultLabel.Name = "ResultLabel";
-            this.ResultLabel.Size = new System.Drawing.Size(83, 59);
-            this.ResultLabel.TabIndex = 2;
-            this.ResultLabel.Text = "0%";
+            this.ResultTreeView.Location = new System.Drawing.Point(7, 231);
+            this.ResultTreeView.Name = "ResultTreeView";
+            this.ResultTreeView.Size = new System.Drawing.Size(293, 144);
+            this.ResultTreeView.TabIndex = 3;
             // 
             // Form1
             // 
@@ -312,10 +310,16 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button Startbutton;
-        private System.Windows.Forms.ListBox ResultListBox;
         private System.Windows.Forms.ProgressBar ResultProgressBar;
         private System.Windows.Forms.TextBox PowerShellTextBox;
         private System.Windows.Forms.Label ResultLabel;
+        //
+        // Init Child processes
+        //
+        Process ApiProcess; // api process
+        Process PSProcess; // powershell process(optional now)
+        Process BrowserProcess; //Child browser
+        private System.Windows.Forms.TreeView ResultTreeView;
     }
 }
 

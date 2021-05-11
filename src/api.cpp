@@ -19,9 +19,17 @@ int main (int argc, char* argv[]){
     if ( argv[1] == std::string("--hello") || argv[1] == std::string("--help") )
       printf("hello i'm your api");
 
-    else if ( argv[1] == std::string("-c") )
-      crypto_finder(argv[2]);
+    else if (argv[1] == std::string("--test") && argv[2]) //test some features
+    {
+        AppThread FindExe(std::string("find.exe ").c_str(), std::string("-k " + std::string(argv[2])).c_str());
+        FindExe.FormatStr();
+        //crypto_finder(argv[2]); 
+    }  
+    else if (argv[1] == std::string("-f")) //find algorithm
+    {
 
+        //crypto_finder(argv[2]); 
+    }
     else if ( argv[1] == std::string("-h") )
       printf("manual must be here");
 
@@ -35,14 +43,14 @@ int main (int argc, char* argv[]){
 
 // useless function
 int crypto_finder(char* i){
+    printf("I'm alive");
+  //std::string call_buffer = "find.exe -k ";
+  //call_buffer += std::string(i);
 
-  std::string call_buffer = "find.exe -k ";
-  call_buffer += std::string(i);
+  //if ( (Pcrypto_finder = popen( call_buffer.c_str(),"r")) == NULL )
+  //  return EXIT_FAILURE;
 
-  if ( (Pcrypto_finder = popen( call_buffer.c_str(),"r")) == NULL )
-    return EXIT_FAILURE;
-
-  else{
+  /*else{
 
     std::string result = "";
     char* buffer = new char [MAXIMUM_BUFFER];
@@ -53,7 +61,8 @@ int crypto_finder(char* i){
       pclose(Pcrypto_finder);
 
       delete buffer;
-
+    
   return EXIT_SUCCESS;
-}
+}*/
+    return EXIT_SUCCESS;
 }

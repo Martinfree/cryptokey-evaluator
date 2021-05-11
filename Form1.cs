@@ -66,5 +66,24 @@ namespace cryptokey_evaluator
             TreeView_Writer(a, 0, OpenKeyTextBox.Text, "відкритий ключ");
             TreeView_Writer(a, 1, SecretKeyTextBox.Text, "таємний ключ");
         }
+
+        private void SecretKeyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SecretKeyTextBox.Enabled = SecretKeyCheckBox.Checked;
+        }
+
+        private void OpenKeyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            OpenKeyTextBox.Enabled = OpenKeyCheckBox.Checked;
+        }
+
+        private void HashCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            OpenKeyTextBox.Enabled = !HashCheckBox.Checked;
+            OpenKeyCheckBox.Enabled = !HashCheckBox.Checked;
+            SecretKeyTextBox.Enabled = !HashCheckBox.Checked;
+            SecretKeyCheckBox.Enabled = !HashCheckBox.Checked;
+
+        }
     }
 }

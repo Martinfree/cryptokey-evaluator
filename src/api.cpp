@@ -11,7 +11,7 @@ In this part you may see:
 */
 
 void InitApp(char *app, char* args);
-
+std::string JohnShowFormat(std::string str);
 
 int main (int argc, char* argv[]){
     while (argc == 0) return EXIT_FAILURE;  
@@ -39,6 +39,7 @@ int main (int argc, char* argv[]){
         CurrentCyph->FileWrite(std::string(argv[2]));
         AppThread* JohnFind = new AppThread(std::string(JOHN).c_str(), std::string(JOHN_SHOW_FORMAT) + std::string(std::string(argv[2])).c_str());
         JohnFind->Exec();
+        JohnFind->Result = JohnShowFormat(JohnFind->Result);
         delete JohnFind;
     }
     else if (
@@ -65,4 +66,15 @@ int main (int argc, char* argv[]){
 
 void InitApp(char* app, char* args) {
     printf("i useless now");
+}
+
+std::string JohnShowFormat(std::string str) 
+{
+    std::string res = "Possible algorithms: \n";
+    
+    if (str.find("gost", 0)!= 0) res += std::string("gost\n");
+    
+    if (str.find("SHA256", 0 != 0)) res += std::string("sha256\n");
+    
+    return res;
 }

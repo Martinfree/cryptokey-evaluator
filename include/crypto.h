@@ -45,9 +45,9 @@ class AppThread {
 private:
 	std::string AppName;
 	std::string AppArgs;
-	std::string Result;
+	
 public:
-
+	std::string Result;
 	int Exec() {
 
 		std::string call_buffer = this->AppName + this->AppArgs;

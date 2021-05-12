@@ -2,11 +2,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include <thread>
 
 #define THREADS std::thread::hardware_concurrency()
-#define MAXIMUM_BUFFER 1024
+#define MAXIMUM_BUFFER 65536
+#define JOHN "powershell john "
+#define JOHN_SHOW_FORMAT "--show=formats "
 FILE* Pcrypto_finder;
 
 #include "crypto.h"

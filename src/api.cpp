@@ -14,32 +14,35 @@ void InitApp(char *app, char* args);
 
 
 int main (int argc, char* argv[]){
-    while (argc == 0) return EXIT_FAILURE;
+    while (argc == 0) return EXIT_FAILURE;  
 
-    if (
-        argv[1] == std::string("--hello") || argv[1] == std::string("--help")
+    if (    
+        argv[1] == std::string("--hello") || argv[1] == std::string("--help") 
         )
     {
         printf("hello i'm your api you can read manual by -h option");
     }
-
+       
     else if (
         argv[1] == std::string("--test") && argv[2]
         ) //test some features
-    {
-        //TEST
-        //AppThread FindExe(std::string("find.exe ").c_str(), std::string("-k " + std::string(argv[2])).c_str());
-        //FindExe.FormatStr();
-        //crypto_finder(argv[2]); 
-    }  
+    { 
+        
+          
+        //crypto_finder(argv[2]);       
+    }   
     else if (
         (argv[1] == std::string("-f") || argv[1] == std::string("--find-whoami")) && argv[2]
         ) //find algorithm
     {
-        printf("i don't know now");
+        Cypher* CurrentCyph = new Cypher(std::string(argv[2]));
+        CurrentCyph->FileWrite(std::string(argv[2]));
+        AppThread* JohnFind = new AppThread(std::string(JOHN).c_str(), std::string(JOHN_SHOW_FORMAT) + std::string(std::string(argv[2])).c_str());
+        JohnFind->Exec();
+        delete JohnFind;
     }
     else if (
-        (argv[1] == std::string("-fast") || argv[1] == std::string("--fast-check")) && argv[2]
+        (argv[1] == std::string("-fast") || argv[1] == std::string("--fast-check")) && argv[2]       
         ) //find algorithm
     {
         printf("fast check");

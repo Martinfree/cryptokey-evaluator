@@ -6,11 +6,10 @@ BFCC=gcc
 CFLAGS=-lm -Iinclude -o 
 
 
-all: api.exe find.exe 
+all: api.exe fast-check.exe 
 
 api.exe: src/api.cpp
 	$(CC) $(CFLAGS) api.exe src/api.cpp
 
-find.exe: src/find-algorythm.cpp
-	$(CC) $(CFLAGS) find.exe src/find-algorythm.cpp
-
+fast-check.exe: src/fast-check.cpp
+	$(CC) $(CFLAGS) fast-check.exe src/fast-check.cpp

@@ -46,7 +46,16 @@ int main (int argc, char* argv[]){
         (argv[1] == std::string("-fast") || argv[1] == std::string("--fast-check")) && argv[2]       
         ) //find algorithm
     {
-        printf("fast check");
+        printf("fast check\n");
+        Cypher* CurrentCyph = new Cypher(std::string(argv[2]));
+        CurrentCyph->FileWrite(std::string(argv[2]));
+
+        if (
+            argv[2]
+            )
+        {
+            AppThread* FindAlg = new AppThread(std::string(FINDTIME).c_str(), std::string(std::string(argv[2])).c_str());
+        }
     }
 
     else if (
@@ -78,3 +87,4 @@ std::string JohnShowFormat(std::string str)
     
     return res;
 }
+

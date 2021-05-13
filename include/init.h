@@ -10,6 +10,7 @@
 #define THREADS std::thread::hardware_concurrency()
 #define MAXIMUM_BUFFER 65536
 #define JOHN "powershell john "
+#define FINDTIME "fast-check "
 #define JOHN_SHOW_FORMAT "--show=formats "
 FILE* Pcrypto_finder;
 

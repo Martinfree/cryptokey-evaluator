@@ -6,6 +6,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <cstring>
 
 #define THREADS std::thread::hardware_concurrency()
 #define MAXIMUM_BUFFER 65536

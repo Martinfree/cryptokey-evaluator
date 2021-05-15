@@ -10,6 +10,7 @@ private:
 	std::string SecretKey = "<None>";
 	std::string SecKeyCombination = "<None>";
 	std::string Algorithm = "<None>";
+	double Rate[4] = { 100, 100, 100, 100 }; //Algorithm, Seckey, ..., ...
 	FILE* CyphFile;
 	float TimeToHack = 0;
 public:
@@ -50,13 +51,19 @@ public:
 		this->Algorithm = alg;
 		this->SecKeyCombination = secstr_comb;
 	}
+	double ChangeRate(int pos, int mark)
+	{
+		if (pos != -1) this->Rate[pos] = mark;
+		return (this->Rate[0] + this->Rate[1] + this->Rate[2] + this->Rate[3])/4;
+	}
 	~Cypher() {
-		printf("Info about Key:\nSecText: %s\nAlgorithm: %s\nOpenKey: %s\nSecKey: %s\nSecKeyCombination: %s\n", 
+		printf("Info about Key:\nSecText: %s\nAlgorithm: %s\nOpenKey: %s\nSecKey: %s\nSecKeyCombination: %s\nMark: %f\n", 
 			(this->Cyph).c_str(), 
 			(this->Algorithm).c_str(),
 			(this->OpenKey).c_str(),
 			(this->SecretKey).c_str(),
-			(this->SecKeyCombination).c_str()
+			(this->SecKeyCombination).c_str(),
+			(this->ChangeRate(-1,-1))
 		);
 	}
 };

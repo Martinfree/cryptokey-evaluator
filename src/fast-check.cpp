@@ -155,12 +155,13 @@ std::string AnalyzePass(std::string str)
     else comb = pow(32, str.length());
     
     std::stringstream result;
-    result << std::string("Password length: ") << std::fixed << std::setprecision(0) << str.length() << std::string("\n")
-        << std::string("Uppercase: ") << upper << std::string("\n")
-        << std::string("Lowerlacase: ") << lower << std::string("\n")
-        << std::string("Numbers: ") << number << std::string("\n")
-        << std::string("Special: ") << special << std::string("\n")
-        << std::string("Possible combinations: ") << comb << std::string("\n");
+    result << std::string("Password length: ") << std::fixed << std::setprecision(0) << str.length() << std::string(" ")
+        << std::string("Uppercase: ") << upper << std::string("; ")
+        << std::string("Lowercase: ") << lower << std::string("; ")
+        << std::string("Numbers: ") << number << std::string("; ")
+        << std::string("Special: ") << special << std::string("; ")
+        << std::string("Possible combinations: ") << comb << std::string("; ")
+    << std::string("Total mark for password: ") << (upper*2 + lower + number + special*3)*3.5 << std::string("; ");
     return result.str();
 }
 

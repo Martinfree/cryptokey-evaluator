@@ -12,6 +12,7 @@ In this part you may see:
 
 void InitApp(char *app, char* args);
 std::string JohnShowFormat(std::string str);
+std::string FormatInit(std::string str, const char* erase);
 
 int main (int argc, char* argv[]){
     while (argc == 0) return EXIT_FAILURE;  
@@ -72,6 +73,23 @@ int main (int argc, char* argv[]){
             FastCheckCyph->Exec();
             
             
+            
+            
+            CurrentCyph->Init(argv[2], 
+                argv[3],
+                std::string("<None>"), 
+                std::string("<None>"), 
+                FormatInit(
+                    FastCheckSecKey->Result, 
+                    "Possible combinations: ")
+            );
+            
+            CurrentCyph->ChangeRate(
+                1,
+                std::stod(FormatInit(  
+                    FastCheckSecKey->Result,
+                    "Total mark for password: "))  
+            );
             delete CurrentCyph;
         }
         else
@@ -119,3 +137,14 @@ std::string JohnShowFormat(std::string str)
     return res;
 }
 
+std::string FormatInit(std::string str, const char* erase)
+{
+    
+    char res[1024];
+    //str.copy(buffer2, FastCheckSecKey->Result.find("SecKeyCombination:"), strlen("Possible combinations: ")
+    
+    //printf("\n\n\n\n\n%s", str.c_str());
+    str.copy(res, str.find(";", str.find(erase)) - str.find(erase)- strlen(erase) , str.find(erase)+ strlen(erase));
+    
+    return std::string(res);
+}

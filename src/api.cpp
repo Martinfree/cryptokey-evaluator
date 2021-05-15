@@ -37,25 +37,56 @@ int main (int argc, char* argv[]){
     {
         Cypher* CurrentCyph = new Cypher(std::string(argv[2]));
         CurrentCyph->FileWrite(std::string(argv[2]));
-        AppThread* JohnFind = new AppThread(std::string(JOHN).c_str(), std::string(JOHN_SHOW_FORMAT) + std::string(std::string(argv[2])).c_str());
+        
+        AppThread* JohnFind = new AppThread(
+            std::string(JOHN).c_str(), 
+            std::string(JOHN_SHOW_FORMAT) + std::string(std::string(argv[2])).c_str()
+        );
+        
         JohnFind->Exec();
         JohnFind->Result = JohnShowFormat(JohnFind->Result);
         delete JohnFind;
+        delete CurrentCyph;
     }
     else if (
         (argv[1] == std::string("-fast") || argv[1] == std::string("--fast-check")) && argv[2]       
         ) //find algorithm
     {
-        printf("fast check\n");
-        Cypher* CurrentCyph = new Cypher(std::string(argv[2]));
-        CurrentCyph->FileWrite(std::string(argv[2]));
-
         if (
-            argv[2]
-            )
+            argv[3]
+            ) //if password exist 
         {
-            AppThread* FindAlg = new AppThread(std::string(FINDTIME).c_str(), std::string(std::string(argv[2])).c_str());
+            Cypher* CurrentCyph = new Cypher(std::string(argv[2]), std::string(argv[3]));
+            
+            AppThread* FastCheckSecKey = new AppThread(
+                std::string(FINDTIME).c_str(), 
+                std::string(std::string("--analyze-pass") + std::string(" ") + std::string(argv[3])).c_str()
+            );
+           
+            AppThread* FastCheckCyph = new AppThread(
+                std::string(FINDTIME).c_str(), 
+                std::string(std::string("--analyze") + std::string(" ") + std::string(argv[2]) + std::string(" ") + std::string(argv[3])).c_str()
+            );
+            
+            FastCheckSecKey->Exec();
+            FastCheckCyph->Exec();
+            
+            
+            delete CurrentCyph;
         }
+        else
+        {
+            Cypher* CurrentCyph = new Cypher(std::string(argv[2]));
+             
+            AppThread* FastCheckCyph = new AppThread(
+                std::string(FINDTIME).c_str(), 
+                std::string(std::string("--analyze") + std::string(" ") + std::string(argv[2])).c_str()
+            );
+            
+            FastCheckCyph->Exec();
+            delete CurrentCyph;
+        }
+
     }
 
     else if (

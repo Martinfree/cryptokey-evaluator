@@ -5,12 +5,13 @@
 //
 class Cypher {
 private:
-	std::string Cyph;
-	std::string OpenKey;
-	std::string SecretKey;
-	std::string Algorithm;
+	std::string Cyph = "<None>";
+	std::string OpenKey = "<None>";
+	std::string SecretKey = "<None>";
+	std::string SecKeyCombination = "<None>";
+	std::string Algorithm = "<None>";
 	FILE* CyphFile;
-	float TimeToHack;
+	float TimeToHack = 0;
 public:
 	//write hash to file for JohnTheRipper, Hascat and other progs
 	void FileWrite(std::string cyph) {
@@ -27,14 +28,37 @@ public:
 	
 	Cypher(std::string str, std::string secstr) {
 		this->Cyph = str;
-		
+		this->SecretKey = secstr;
 	}
 	
 	Cypher(std::string str, std::string secstr, std::string openstr) {
 		this->Cyph = str;
-		
+		this->SecretKey = secstr;
+		this->OpenKey = openstr;
 	}
-
+	Cypher(std::string str, std::string secstr, std::string openstr, std::string alg ,std::string secstr_comb) {
+		this->Cyph = str;
+		this->SecretKey = secstr;
+		this->OpenKey = openstr;
+		this->Algorithm = alg;
+		this->SecKeyCombination = secstr_comb;
+	}
+	void Init(std::string str, std::string secstr, std::string openstr, std::string alg, std::string secstr_comb) {
+		this->Cyph = str;
+		this->SecretKey = secstr;
+		this->OpenKey = openstr;
+		this->Algorithm = alg;
+		this->SecKeyCombination = secstr_comb;
+	}
+	~Cypher() {
+		printf("Info about Key:\nSecText: %s\nAlgorithm: %s\nOpenKey: %s\nSecKey: %s\nSecKeyCombination: %s\n", 
+			(this->Cyph).c_str(), 
+			(this->Algorithm).c_str(),
+			(this->OpenKey).c_str(),
+			(this->SecretKey).c_str(),
+			(this->SecKeyCombination).c_str()
+		);
+	}
 };
 
 

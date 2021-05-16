@@ -130,9 +130,26 @@ std::string JohnShowFormat(std::string str)
 {
     std::string res = "Possible algorithms: \n";
     
-    if (str.find("gost", 0)!= 0) res += std::string("gost\n");
-    
-    if (str.find("SHA256", 0 != 0)) res += std::string("sha256\n");
+    size_t pos=0;
+    while (pos != -1)
+    {
+        pos = str.find("{\"label\":", pos);
+        if (pos == -1)
+        {
+        }
+        else
+        {
+            char* alg = new char[16];
+            
+            str.copy(alg, str.find("\",\"", pos) - str.find("{\"label\":", pos) - strlen("{\"label\":") - 1, str.find("{\"label\":", pos) + strlen("{\"label\":") + 1);
+            alg[str.find("\",\"", pos) - str.find("{\"label\":", pos) - strlen("{\"label\":")-1] = '\0';
+            res = res + std::string(alg) + std::string("; \n");
+            pos += strlen("{\"label\":");
+            alg[64] = '\0';
+            delete[] alg;
+        }
+    }
+
     
     return res;
 }

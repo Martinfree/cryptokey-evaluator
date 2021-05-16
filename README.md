@@ -1,6 +1,5 @@
 # About project
 
-
 This program branch designed for display during the delivery of the thesis
 "checking algorithm Crypto keys for cracking resistance"
 
@@ -8,7 +7,9 @@ This program branch designed for display during the delivery of the thesis
 
 ```
 
+
 WAIT FOR WORDS...
+
 
 ```
 

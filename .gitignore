@@ -1,7 +1,3 @@
 *.exe
-<<<<<<< HEAD
-.vs
-=======
 .vs
 include/*.txt
->>>>>>> main

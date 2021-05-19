@@ -113,7 +113,7 @@ namespace cryptokey_evaluator
             // FastCheckBox
             // 
             this.FastCheckBox.AutoSize = true;
-            this.FastCheckBox.Enabled = false;
+            this.FastCheckBox.Enabled = true;
             this.FastCheckBox.Location = new System.Drawing.Point(6, 32);
             this.FastCheckBox.Name = "FastCheckBox";
             this.FastCheckBox.Size = new System.Drawing.Size(125, 19);
@@ -399,7 +399,7 @@ namespace cryptokey_evaluator
         //
         // Init Child processes
         //
-        Process ApiProcess; // api process
+        Process ApiProcess = new System.Diagnostics.Process(); // api process
         Process PSProcess; // powershell process(optional now)
         Process BrowserProcess; //Child browser
         private System.Windows.Forms.TreeView ResultTreeView;

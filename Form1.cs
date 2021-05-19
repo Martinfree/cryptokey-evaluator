@@ -14,7 +14,26 @@ namespace cryptokey_evaluator
     
     public partial class Form1 : Form
     {
+        string ApiProcessExec(Process proc, string args) 
+        {
+            proc.StartInfo.FileName = "powershell.exe ";
+            proc.StartInfo.Arguments = System.IO.Directory.GetCurrentDirectory().Replace("bin\\Debug\\net5.0-windows", "").Replace("\\", "/") + "api.exe " + args;
+            proc.StartInfo.RedirectStandardInput = true;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.StartInfo.UseShellExecute = false;
+          
+            proc.Start();
+            proc.WaitForExit();
+            return proc.StandardOutput.ReadToEnd();
+        }
 
+        string CopyFromTo(string str, string from, string to)
+        {
+            string res = str.Substring(str.IndexOf(from) + from.Length, str.IndexOf(to) - str.IndexOf(from) - to.Length - 6);
+            
+            return res;
+        }
         void TreeView_Writer(int parent_count,int child_count, string str, string local_word)
         {
 
@@ -61,10 +80,28 @@ namespace cryptokey_evaluator
 
         private void Startbutton_Click(object sender, EventArgs e)
         {
-            int a = ResultTreeView.Nodes.Add(CypherTextBox.Text).Index;
+            string FormatCheck;
+            string FastCheck;
 
-            TreeView_Writer(a, 0, OpenKeyTextBox.Text, "відкритий ключ");
-            TreeView_Writer(a, 1, SecretKeyTextBox.Text, "таємний ключ");
+            if (CypherTextBox.Text == "") return;
+            
+
+            FastCheck = ApiProcessExec(ApiProcess, "-fast " + CypherTextBox.Text.Replace(" ","") + " " + SecretKeyTextBox.Text.Replace(" ", ""));
+            //PowerShellTextBox.Text = "Result: " + FastCheck;        
+            
+            PowerShellTextBox.Text = ApiProcess.ExitCode.ToString();
+            FormatCheck = ApiProcessExec(ApiProcess, "-f " + CypherTextBox.Text);
+            //PowerShellTextBox.Text = ApiProcess.ExitCode.ToString();
+            
+            int a = ResultTreeView.Nodes.Add(CypherTextBox.Text).Index;
+            TreeView_Writer(a, 0, CopyFromTo(FormatCheck, "Possible algorithms:", "Info about Key:"), "Алгоритми");
+            TreeView_Writer(a, 1, OpenKeyTextBox.Text, "відкритий ключ");
+            TreeView_Writer(a, 2, SecretKeyTextBox.Text, "таємний ключ");
+            ResultTreeView.Nodes[a].Nodes[2].Nodes.Add(
+                FastCheck
+                );
+            
+            
         }
 
         private void SecretKeyCheckBox_CheckedChanged(object sender, EventArgs e)

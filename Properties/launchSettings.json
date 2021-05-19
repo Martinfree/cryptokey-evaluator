@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "cryptokey-evaluator": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

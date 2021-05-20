@@ -200,6 +200,6 @@ public:
 	}
 
 	~AppThread() {
-		printf("\n%s\n",(this->Result).c_str());
+		//printf("\n%s\n",(this->Result).c_str());
 	}
 };

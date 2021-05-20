@@ -16,9 +16,16 @@ void CallCmd(std::string argv1);
 void CallCmd(std::string argv1, std::string argv2);
 void CallCmd(std::string argv1, std::string argv2, std::string argv3);
 
+std::string format_equal(std::string str, const char* line)
+{
+    return str.substr(std::string(str).find(line) + std::string(line).length());
+}
+
 std::string JohnShowFormat(std::string str);
 std::string FormatInit(std::string str, const char* erase);
-std::string FindPass(std::string file, std::string secret);
+std::string FindPass(std::string file_name, std::string secret);
+std::ifstream OpenFile(std::string file_name);
+
 int main (int argc, char* argv[]){
     
     
@@ -66,7 +73,9 @@ void CallCmd(std::string argv1, std::string argv2)
         ) {
         //Cypher* CurrentCyph = new Cypher(std::string(std::string(argv2)));
         //CurrentCyph->FileWrite(std::string(std::string(argv2)));
-        FileWrite(std::string(std::string(argv2)));
+        //FileWrite(std::string(std::string(argv2)));
+        
+        //OpenFile(argv2);
 
         AppThread* JohnFind = new AppThread(
             std::string(JOHN).c_str(),
@@ -82,14 +91,15 @@ void CallCmd(std::string argv1, std::string argv2)
         std::string(argv1).find("--fast-check-format=") != std::string::npos
         ) {// fast check secret text 
         printf("I didn't know how to analyze %s",
-            std::string(argv1).substr(std::string(argv1).find("--fast-check-format=") + std::string("--fast-check-format=").length()).c_str()
+            format_equal(argv1, "--fast-check-format=")
         );
 
     }
+    
     else if (
         std::string(argv1).find("--find-pass=") != std::string::npos
         ) printf("%s",
-            FindPass(std::string(argv1).substr(std::string(argv1).find("--find-pass=") + std::string("--find-pass=").length()).c_str(),
+            FindPass(format_equal(argv1,"--find-pass="),
                 std::string(argv2)).c_str()
         );
     else if (
@@ -103,26 +113,96 @@ void CallCmd(std::string argv1, std::string argv2)
 
 void CallCmd(std::string argv1, std::string argv2, std::string argv3)
 {
-
     if (
         argv1 == "--fast-check" //simple check password
         ) {
-        Cypher* CurrentCyph = new Cypher(
-            std::string(std::string(argv2)), 
-            std::string(std::string(argv3))
-        );
+        Cypher* CurrentCyph;
+        std::string line;
+        std::ifstream file = OpenFile(argv2);
         
-        CurrentCyph->AnalyzePass(argv3);
+        if (
+            file.is_open()
+            ) {
+            
+            for (unsigned int curLine = 0; std::getline(file, line); curLine++) {
+                
+                CurrentCyph = new Cypher(
+                        line,
+                        argv3
+                    );
+                    //secret = std::string("found: ") + secret + std::string(" in file: ") + file_name;
+                CurrentCyph->AnalyzePass(argv3);
 
-        CurrentCyph->InitRes(std::string(argv2),
-            std::string(argv3),
-            std::string("<None>"),
-            std::string("<None>")
-        );
+                CurrentCyph->InitRes(std::string(argv2),
+                    std::string(argv3),
+                    std::string("<None>"),
+                    std::string("<None>")
+                );
+
+                CurrentCyph->ChangeRate(-1, -1);
+                delete CurrentCyph;
+            }
+            file.close();
+        } else printf("No such file");
         
-        CurrentCyph->ChangeRate(-1,-1);
-        delete CurrentCyph;
     }
+    else if (
+        std::string(argv1).find("--dict-attack=") != std::string::npos
+        ) {
+        
+        std::ifstream file = OpenFile(
+            format_equal(argv1, "--dict-attack=")
+        );
+        if (
+            file.is_open()
+            ) {
+            
+            //Cypher* CurrentCyph = new Cypher(
+            //    std::string(std::string(argv2)),
+            //    std::string(std::string(argv3))
+            //);
+
+            
+            AppThread* DictAttack = new AppThread(
+                std::string(JOHN).c_str(),
+                std::string(JOHN_FORMAT) + argv3 + std::string(" ") + std::string(JOHN_DICT_ATTACK) + format_equal(argv1, "--dict-attack=") + std::string(" ") + argv2
+            );
+            DictAttack->Exec();
+            
+            //delete DictAttack;
+            AppThread* DictAttackRes = new AppThread(
+                std::string(JOHN).c_str(),
+                std::string(JOHN_SHOW) +std::string(" ")+ argv2
+            );
+
+            //printf("\n%s\n", (std::string(JOHN_DICT_ATTACK) + format_equal(argv1, "--dict-attack=") + argv2).c_str());
+            DictAttackRes->Exec();
+            printf("%s", DictAttackRes->Result.c_str());
+        }
+    }
+    else if (
+        std::string(argv1).find("--mask-attack=") != std::string::npos
+        ) {
+         //Hashcat hashcat.bat -D 2 -m 16500 -a 3 C:\cryptokey-evaluator\main\cryptokey-evaluator\hash.txt qwerty?d?d?d?d?d
+         //Hashcat hashcat.bat -D 2 -m 16500 -a 3 --show C:\cryptokey-evaluator\main\cryptokey-evaluator\hash.txt qwerty?d?d?d?d?d
+        
+         AppThread* MaskAttack = new AppThread(
+                std::string(JOHN).c_str(),
+                std::string(JOHN_FORMAT) + argv3 + std::string(" ") + std::string(JOHN_MASK_ATTACK) + format_equal(argv1, "--mask-attack=") + std::string(" ") + argv2
+            );
+            MaskAttack->Exec();
+
+            //delete DictAttack;
+            AppThread* MaskAttackRes = new AppThread(
+                std::string(JOHN).c_str(),
+                std::string(JOHN_SHOW) + std::string(" ") + argv2
+            );
+
+            //printf("\n%s\n", (std::string(JOHN_DICT_ATTACK) + format_equal(argv1, "--dict-attack=") + argv2).c_str());
+            MaskAttackRes->Exec();
+            printf("%s", MaskAttackRes->Result.c_str());
+    }
+    
 }
 
 
@@ -171,10 +251,9 @@ std::string FormatInit(std::string str, const char* erase)
 
 std::string FindPass(std::string file_name, std::string secret)
 {
-    char path[256];
-    getcwd(path, 256);
-    std::ifstream file((std::string(path) + std::string("/") + std::string(file_name)).c_str(), std::ifstream::in);
+    
     //std::ifstream file(file_name, std::ifstream::in);
+    std::ifstream file = OpenFile(file_name);
     if (
         file.is_open()
         ) {
@@ -186,15 +265,23 @@ std::string FindPass(std::string file_name, std::string secret)
             }
         }
         file.close();
-    } else return std::string(std::string("No such file or dir: ") + (std::string(path) + std::string("/") + std::string(file_name)));
-
-    return "Error";
+    }
+    else return std::string(std::string("No such file or dir ") );
+    return "";
 }
 
 //write hash to file for JohnTheRipper, Hascat and other progs
-void FileWrite(std::string cyph) {
+void CreateFile(std::string cyph) {
 
     CyphFile = fopen(cyph.c_str(), "wa+");
     fprintf(CyphFile, cyph.c_str());
     fclose(CyphFile);
+}
+
+std::ifstream OpenFile(std::string file_name)
+{
+    char path[256];
+    getcwd(path, 256);
+    std::ifstream file((std::string(path) + std::string("/") + std::string(file_name)).c_str(), std::ifstream::in);
+    return file;
 }

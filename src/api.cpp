@@ -18,7 +18,7 @@ void CallCmd(std::string argv1, std::string argv2, std::string argv3);
 
 std::string JohnShowFormat(std::string str);
 std::string FormatInit(std::string str, const char* erase);
-
+std::string FindPass(std::string file, std::string secret);
 int main (int argc, char* argv[]){
     
     
@@ -86,6 +86,19 @@ void CallCmd(std::string argv1, std::string argv2)
         );
 
     }
+    else if (
+        std::string(argv1).find("--find-pass=") != std::string::npos
+        ) printf("%s",
+            FindPass(std::string(argv1).substr(std::string(argv1).find("--find-pass=") + std::string("--find-pass=").length()).c_str(),
+                std::string(argv2)).c_str()
+        );
+    else if (
+        (std::string(argv1).find("--find-pass") != std::string::npos)
+        ) printf("%s",
+                FindPass(std::string("include/rockyou.txt"),
+                    std::string(argv2)).c_str());
+    
+
 }
 
 void CallCmd(std::string argv1, std::string argv2, std::string argv3)
@@ -109,15 +122,7 @@ void CallCmd(std::string argv1, std::string argv2, std::string argv3)
         
         CurrentCyph->ChangeRate(-1,-1);
         delete CurrentCyph;
-    }else if (
-        std::string(argv1).find("--fast-check-format=") != std::string::npos
-        ) {// fast check secret text 
-        printf("I didn't know how to analyze\n%s",
-            std::string(argv1).substr(std::string(argv1).find("--fast-check-format=") + std::string("--fast-check-format=").length()).c_str()
-        );
-
     }
-
 }
 
 
@@ -162,6 +167,28 @@ std::string FormatInit(std::string str, const char* erase)
     str.copy(res, str.find(";", str.find(erase)) - str.find(erase)- strlen(erase)-1 , str.find(erase)+ strlen(erase));
     
     return std::string(res);
+}
+
+std::string FindPass(std::string file_name, std::string secret)
+{
+    char path[256];
+    getcwd(path, 256);
+    std::ifstream file((std::string(path) + std::string("/") + std::string(file_name)).c_str(), std::ifstream::in);
+    //std::ifstream file(file_name, std::ifstream::in);
+    if (
+        file.is_open()
+        ) {
+        std::string line;
+        for (unsigned int curLine = 0; std::getline(file, line); curLine++) {
+            if (line.find(secret) != std::string::npos) {
+                secret = std::string("found: ") + secret + std::string(" in file: ") + file_name;
+                return secret;
+            }
+        }
+        file.close();
+    } else return std::string(std::string("No such file or dir: ") + (std::string(path) + std::string("/") + std::string(file_name)));
+
+    return "Error";
 }
 
 //write hash to file for JohnTheRipper, Hascat and other progs

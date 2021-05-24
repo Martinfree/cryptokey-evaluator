@@ -1,3 +1,5 @@
 *.exe
 .vs
 include/*.txt
+.hash
+.seckey

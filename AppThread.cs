@@ -10,15 +10,16 @@ namespace cryptokey_evaluator
     {
 		System.Diagnostics.Process App;
 		string Result = "";
-		public AppThread(string FileName, string AppName, string args)
+		public AppThread(string FileName, string AppName, string args )
 		{
 			App = new System.Diagnostics.Process();
 			App.StartInfo.FileName = FileName;
-			App.StartInfo.Arguments = System.IO.Directory.GetCurrentDirectory().Replace("bin\\Debug\\net5.0-windows", "").Replace("\\", "/") + AppName + args;
+			App.StartInfo.Arguments = System.IO.Directory.GetCurrentDirectory().Replace("bin\\Release\\net5.0-windows", "").Replace("\\", "/") + AppName + args;
 			App.StartInfo.RedirectStandardInput = true;
 			App.StartInfo.RedirectStandardOutput = true;
 			App.StartInfo.CreateNoWindow = true;
-			App.StartInfo.UseShellExecute = false;		
+			App.StartInfo.UseShellExecute = false;
+
 		}
 		public AppThread(bool browser, string url)
 		{
@@ -30,7 +31,7 @@ namespace cryptokey_evaluator
 		}
 		public string Exec()
 		{
-			new System.Diagnostics.Process();
+            
 			App.Start();
 			App.WaitForExit();
 			Result = App.StandardOutput.ReadToEnd();
@@ -49,4 +50,3 @@ namespace cryptokey_evaluator
 		}
 	};
 }
-

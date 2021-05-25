@@ -33,32 +33,34 @@ namespace cryptokey_evaluator
         {
             this.VersionLinkLabel = new System.Windows.Forms.LinkLabel();
             this.InputGroupBox = new System.Windows.Forms.GroupBox();
+            this.AlgLabel = new System.Windows.Forms.Label();
+            this.AlgTextBox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.CypherOpenFileButton = new System.Windows.Forms.Button();
-            this.AttackButton = new System.Windows.Forms.Button();
             this.HackManagmentGroupBox = new System.Windows.Forms.GroupBox();
-            this.FindPassRadioButton = new System.Windows.Forms.RadioButton();
-            this.Timelabel = new System.Windows.Forms.Label();
-            this.TimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.MaskCheckBox = new System.Windows.Forms.CheckBox();
             this.FastCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.FindPassRadioButton = new System.Windows.Forms.RadioButton();
+            this.AttackButton = new System.Windows.Forms.Button();
+            this.CrackingResRadioButton = new System.Windows.Forms.RadioButton();
+            this.NullCheckBox = new System.Windows.Forms.CheckBox();
             this.SecretKeyLabel = new System.Windows.Forms.Label();
             this.SecretKeyTextBox = new System.Windows.Forms.TextBox();
             this.CypherTextBox = new System.Windows.Forms.TextBox();
             this.CypherLabel = new System.Windows.Forms.Label();
             this.Startbutton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ResTreeView = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
-            this.ResultTreeView = new System.Windows.Forms.TreeView();
             this.MarkLabel = new System.Windows.Forms.Label();
             this.ResultProgressBar = new System.Windows.Forms.ProgressBar();
             this.PowerShellTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CypherOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SecretOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.InputGroupBox.SuspendLayout();
             this.HackManagmentGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +68,7 @@ namespace cryptokey_evaluator
             // VersionLinkLabel
             // 
             this.VersionLinkLabel.AutoSize = true;
-            this.VersionLinkLabel.Location = new System.Drawing.Point(532, 478);
+            this.VersionLinkLabel.Location = new System.Drawing.Point(660, 526);
             this.VersionLinkLabel.Name = "VersionLinkLabel";
             this.VersionLinkLabel.Size = new System.Drawing.Size(204, 15);
             this.VersionLinkLabel.TabIndex = 0;
@@ -76,9 +78,10 @@ namespace cryptokey_evaluator
             // 
             // InputGroupBox
             // 
+            this.InputGroupBox.Controls.Add(this.AlgLabel);
+            this.InputGroupBox.Controls.Add(this.AlgTextBox);
             this.InputGroupBox.Controls.Add(this.button2);
             this.InputGroupBox.Controls.Add(this.CypherOpenFileButton);
-            this.InputGroupBox.Controls.Add(this.AttackButton);
             this.InputGroupBox.Controls.Add(this.HackManagmentGroupBox);
             this.InputGroupBox.Controls.Add(this.SecretKeyLabel);
             this.InputGroupBox.Controls.Add(this.SecretKeyTextBox);
@@ -86,16 +89,32 @@ namespace cryptokey_evaluator
             this.InputGroupBox.Controls.Add(this.CypherLabel);
             this.InputGroupBox.Location = new System.Drawing.Point(12, 12);
             this.InputGroupBox.Name = "InputGroupBox";
-            this.InputGroupBox.Size = new System.Drawing.Size(351, 292);
+            this.InputGroupBox.Size = new System.Drawing.Size(508, 274);
             this.InputGroupBox.TabIndex = 1;
             this.InputGroupBox.TabStop = false;
             this.InputGroupBox.Text = "Область вводу";
+            // 
+            // AlgLabel
+            // 
+            this.AlgLabel.AutoSize = true;
+            this.AlgLabel.Location = new System.Drawing.Point(7, 119);
+            this.AlgLabel.Name = "AlgLabel";
+            this.AlgLabel.Size = new System.Drawing.Size(62, 15);
+            this.AlgLabel.TabIndex = 15;
+            this.AlgLabel.Text = "Алгоритм";
+            // 
+            // AlgTextBox
+            // 
+            this.AlgTextBox.Location = new System.Drawing.Point(6, 137);
+            this.AlgTextBox.Name = "AlgTextBox";
+            this.AlgTextBox.Size = new System.Drawing.Size(234, 23);
+            this.AlgTextBox.TabIndex = 14;
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(303, 93);
+            this.button2.Location = new System.Drawing.Point(246, 92);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(26, 23);
             this.button2.TabIndex = 13;
@@ -105,84 +124,93 @@ namespace cryptokey_evaluator
             // 
             this.CypherOpenFileButton.BackColor = System.Drawing.Color.Transparent;
             this.CypherOpenFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CypherOpenFileButton.Location = new System.Drawing.Point(303, 42);
+            this.CypherOpenFileButton.Location = new System.Drawing.Point(246, 41);
             this.CypherOpenFileButton.Name = "CypherOpenFileButton";
             this.CypherOpenFileButton.Size = new System.Drawing.Size(26, 23);
             this.CypherOpenFileButton.TabIndex = 12;
             this.CypherOpenFileButton.UseVisualStyleBackColor = false;
             this.CypherOpenFileButton.Click += new System.EventHandler(this.CypherOpenFileButton_Click);
             // 
-            // AttackButton
-            // 
-            this.AttackButton.Location = new System.Drawing.Point(210, 260);
-            this.AttackButton.Name = "AttackButton";
-            this.AttackButton.Size = new System.Drawing.Size(135, 23);
-            this.AttackButton.TabIndex = 11;
-            this.AttackButton.Text = "AttackButton";
-            this.AttackButton.UseVisualStyleBackColor = true;
-            // 
             // HackManagmentGroupBox
             // 
-            this.HackManagmentGroupBox.Controls.Add(this.FindPassRadioButton);
-            this.HackManagmentGroupBox.Controls.Add(this.Timelabel);
-            this.HackManagmentGroupBox.Controls.Add(this.TimeNumericUpDown);
+            this.HackManagmentGroupBox.Controls.Add(this.checkBox1);
+            this.HackManagmentGroupBox.Controls.Add(this.MaskCheckBox);
             this.HackManagmentGroupBox.Controls.Add(this.FastCheckBox);
-            this.HackManagmentGroupBox.Controls.Add(this.checkBox3);
-            this.HackManagmentGroupBox.Location = new System.Drawing.Point(7, 122);
+            this.HackManagmentGroupBox.Controls.Add(this.FindPassRadioButton);
+            this.HackManagmentGroupBox.Controls.Add(this.AttackButton);
+            this.HackManagmentGroupBox.Controls.Add(this.CrackingResRadioButton);
+            this.HackManagmentGroupBox.Controls.Add(this.NullCheckBox);
+            this.HackManagmentGroupBox.Location = new System.Drawing.Point(278, 22);
             this.HackManagmentGroupBox.Name = "HackManagmentGroupBox";
-            this.HackManagmentGroupBox.Size = new System.Drawing.Size(158, 164);
+            this.HackManagmentGroupBox.Size = new System.Drawing.Size(224, 246);
             this.HackManagmentGroupBox.TabIndex = 10;
             this.HackManagmentGroupBox.TabStop = false;
-            this.HackManagmentGroupBox.Text = "Управління перевіркою";
+            this.HackManagmentGroupBox.Text = "Алгоритмізація перевірки";
+            // 
+            // MaskCheckBox
+            // 
+            this.MaskCheckBox.AutoSize = true;
+            this.MaskCheckBox.Location = new System.Drawing.Point(25, 141);
+            this.MaskCheckBox.Name = "MaskCheckBox";
+            this.MaskCheckBox.Size = new System.Drawing.Size(64, 19);
+            this.MaskCheckBox.TabIndex = 13;
+            this.MaskCheckBox.Text = "--mask";
+            this.MaskCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FastCheckBox
+            // 
+            this.FastCheckBox.AutoSize = true;
+            this.FastCheckBox.Location = new System.Drawing.Point(25, 49);
+            this.FastCheckBox.Name = "FastCheckBox";
+            this.FastCheckBox.Size = new System.Drawing.Size(91, 19);
+            this.FastCheckBox.TabIndex = 8;
+            this.FastCheckBox.Text = "--fast-check";
+            this.FastCheckBox.UseVisualStyleBackColor = true;
+            this.FastCheckBox.CheckedChanged += new System.EventHandler(this.FastCheckBox_CheckedChanged);
             // 
             // FindPassRadioButton
             // 
             this.FindPassRadioButton.AutoSize = true;
-            this.FindPassRadioButton.Location = new System.Drawing.Point(7, 48);
+            this.FindPassRadioButton.Location = new System.Drawing.Point(6, 116);
             this.FindPassRadioButton.Name = "FindPassRadioButton";
             this.FindPassRadioButton.Size = new System.Drawing.Size(84, 19);
             this.FindPassRadioButton.TabIndex = 11;
             this.FindPassRadioButton.TabStop = true;
             this.FindPassRadioButton.Text = "--find-pass";
             this.FindPassRadioButton.UseVisualStyleBackColor = true;
+            this.FindPassRadioButton.CheckedChanged += new System.EventHandler(this.FindPassRadioButton_CheckedChanged);
             // 
-            // Timelabel
+            // AttackButton
             // 
-            this.Timelabel.AutoSize = true;
-            this.Timelabel.Location = new System.Drawing.Point(97, 142);
-            this.Timelabel.Name = "Timelabel";
-            this.Timelabel.Size = new System.Drawing.Size(19, 15);
-            this.Timelabel.TabIndex = 10;
-            this.Timelabel.Text = "хв";
+            this.AttackButton.Location = new System.Drawing.Point(11, 217);
+            this.AttackButton.Name = "AttackButton";
+            this.AttackButton.Size = new System.Drawing.Size(135, 23);
+            this.AttackButton.TabIndex = 11;
+            this.AttackButton.Text = "Провести атаку";
+            this.AttackButton.UseVisualStyleBackColor = true;
             // 
-            // TimeNumericUpDown
+            // CrackingResRadioButton
             // 
-            this.TimeNumericUpDown.Enabled = false;
-            this.TimeNumericUpDown.Location = new System.Drawing.Point(6, 135);
-            this.TimeNumericUpDown.Name = "TimeNumericUpDown";
-            this.TimeNumericUpDown.Size = new System.Drawing.Size(75, 23);
-            this.TimeNumericUpDown.TabIndex = 9;
+            this.CrackingResRadioButton.AutoSize = true;
+            this.CrackingResRadioButton.Location = new System.Drawing.Point(6, 22);
+            this.CrackingResRadioButton.Name = "CrackingResRadioButton";
+            this.CrackingResRadioButton.Size = new System.Drawing.Size(137, 19);
+            this.CrackingResRadioButton.TabIndex = 12;
+            this.CrackingResRadioButton.TabStop = true;
+            this.CrackingResRadioButton.Text = "--cracking-resistance";
+            this.CrackingResRadioButton.UseVisualStyleBackColor = true;
+            this.CrackingResRadioButton.CheckedChanged += new System.EventHandler(this.CrackingResRadioButton_CheckedChanged);
             // 
-            // FastCheckBox
+            // NullCheckBox
             // 
-            this.FastCheckBox.AutoSize = true;
-            this.FastCheckBox.Location = new System.Drawing.Point(6, 22);
-            this.FastCheckBox.Name = "FastCheckBox";
-            this.FastCheckBox.Size = new System.Drawing.Size(91, 19);
-            this.FastCheckBox.TabIndex = 8;
-            this.FastCheckBox.Text = "--fast-check";
-            this.FastCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(6, 110);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(121, 19);
-            this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "Розрахунок часу ";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.NullCheckBox.AutoSize = true;
+            this.NullCheckBox.Enabled = false;
+            this.NullCheckBox.Location = new System.Drawing.Point(25, 74);
+            this.NullCheckBox.Name = "NullCheckBox";
+            this.NullCheckBox.Size = new System.Drawing.Size(56, 19);
+            this.NullCheckBox.TabIndex = 7;
+            this.NullCheckBox.Text = "--null";
+            this.NullCheckBox.UseVisualStyleBackColor = true;
             // 
             // SecretKeyLabel
             // 
@@ -197,14 +225,14 @@ namespace cryptokey_evaluator
             // 
             this.SecretKeyTextBox.Location = new System.Drawing.Point(6, 93);
             this.SecretKeyTextBox.Name = "SecretKeyTextBox";
-            this.SecretKeyTextBox.Size = new System.Drawing.Size(291, 23);
+            this.SecretKeyTextBox.Size = new System.Drawing.Size(234, 23);
             this.SecretKeyTextBox.TabIndex = 3;
             // 
             // CypherTextBox
             // 
             this.CypherTextBox.Location = new System.Drawing.Point(7, 42);
             this.CypherTextBox.Name = "CypherTextBox";
-            this.CypherTextBox.Size = new System.Drawing.Size(291, 23);
+            this.CypherTextBox.Size = new System.Drawing.Size(233, 23);
             this.CypherTextBox.TabIndex = 1;
             // 
             // CypherLabel
@@ -218,7 +246,7 @@ namespace cryptokey_evaluator
             // 
             // Startbutton
             // 
-            this.Startbutton.Location = new System.Drawing.Point(245, 223);
+            this.Startbutton.Location = new System.Drawing.Point(209, 251);
             this.Startbutton.Name = "Startbutton";
             this.Startbutton.Size = new System.Drawing.Size(116, 23);
             this.Startbutton.TabIndex = 1;
@@ -228,40 +256,40 @@ namespace cryptokey_evaluator
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ResTreeView);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.ResultTreeView);
             this.groupBox1.Controls.Add(this.MarkLabel);
             this.groupBox1.Controls.Add(this.ResultProgressBar);
             this.groupBox1.Controls.Add(this.Startbutton);
-            this.groupBox1.Location = new System.Drawing.Point(369, 12);
+            this.groupBox1.Location = new System.Drawing.Point(526, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(367, 463);
+            this.groupBox1.Size = new System.Drawing.Size(338, 511);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Результати";
+            // 
+            // ResTreeView
+            // 
+            this.ResTreeView.Location = new System.Drawing.Point(7, 280);
+            this.ResTreeView.Name = "ResTreeView";
+            this.ResTreeView.Size = new System.Drawing.Size(325, 225);
+            this.ResTreeView.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(126, 72);
+            this.label1.Location = new System.Drawing.Point(104, 68);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(121, 45);
             this.label1.TabIndex = 4;
             this.label1.Text = "Оцінка";
             // 
-            // ResultTreeView
-            // 
-            this.ResultTreeView.Location = new System.Drawing.Point(6, 264);
-            this.ResultTreeView.Name = "ResultTreeView";
-            this.ResultTreeView.Size = new System.Drawing.Size(355, 193);
-            this.ResultTreeView.TabIndex = 3;
-            // 
             // MarkLabel
             // 
             this.MarkLabel.AutoSize = true;
             this.MarkLabel.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MarkLabel.Location = new System.Drawing.Point(163, 114);
+            this.MarkLabel.Location = new System.Drawing.Point(127, 119);
             this.MarkLabel.Name = "MarkLabel";
             this.MarkLabel.Size = new System.Drawing.Size(48, 59);
             this.MarkLabel.TabIndex = 2;
@@ -271,7 +299,7 @@ namespace cryptokey_evaluator
             // 
             this.ResultProgressBar.Location = new System.Drawing.Point(6, 31);
             this.ResultProgressBar.Name = "ResultProgressBar";
-            this.ResultProgressBar.Size = new System.Drawing.Size(355, 23);
+            this.ResultProgressBar.Size = new System.Drawing.Size(326, 23);
             this.ResultProgressBar.TabIndex = 0;
             // 
             // PowerShellTextBox
@@ -282,7 +310,8 @@ namespace cryptokey_evaluator
             this.PowerShellTextBox.Location = new System.Drawing.Point(6, 22);
             this.PowerShellTextBox.Multiline = true;
             this.PowerShellTextBox.Name = "PowerShellTextBox";
-            this.PowerShellTextBox.Size = new System.Drawing.Size(339, 151);
+            this.PowerShellTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.PowerShellTextBox.Size = new System.Drawing.Size(496, 203);
             this.PowerShellTextBox.TabIndex = 9;
             this.PowerShellTextBox.Text = "Hello I\'m your PowerShell like console >";
             this.PowerShellTextBox.Click += new System.EventHandler(this.PowerShellTextBox_Click);
@@ -290,9 +319,9 @@ namespace cryptokey_evaluator
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.PowerShellTextBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 310);
+            this.groupBox2.Location = new System.Drawing.Point(12, 292);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(351, 180);
+            this.groupBox2.Size = new System.Drawing.Size(508, 231);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Область управління";
@@ -305,11 +334,22 @@ namespace cryptokey_evaluator
             // 
             this.SecretOpenFileDialog.FileName = "SecKeyOpenFileDialog";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(25, 96);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(121, 19);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Розрахунок часу ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 502);
+            this.ClientSize = new System.Drawing.Size(869, 550);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.InputGroupBox);
@@ -320,7 +360,6 @@ namespace cryptokey_evaluator
             this.InputGroupBox.PerformLayout();
             this.HackManagmentGroupBox.ResumeLayout(false);
             this.HackManagmentGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeNumericUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -339,20 +378,14 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.TextBox CypherTextBox;
         private System.Windows.Forms.Label CypherLabel;
         private System.Windows.Forms.CheckBox FastCheckBox;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox NullCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button Startbutton;
         private System.Windows.Forms.ProgressBar ResultProgressBar;
         private System.Windows.Forms.TextBox PowerShellTextBox;
         private System.Windows.Forms.Label MarkLabel;
-        //
-        // Init Child processes
-        //
-        private System.Windows.Forms.TreeView ResultTreeView;
         private System.Windows.Forms.GroupBox HackManagmentGroupBox;
-        private System.Windows.Forms.Label Timelabel;
-        private System.Windows.Forms.NumericUpDown TimeNumericUpDown;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button AttackButton;
         private System.Windows.Forms.RadioButton FindPassRadioButton;
@@ -361,6 +394,12 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.Button CypherOpenFileButton;
         private System.Windows.Forms.OpenFileDialog SecretOpenFileDialog;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton CrackingResRadioButton;
+        private System.Windows.Forms.CheckBox MaskCheckBox;
+        private System.Windows.Forms.Label AlgLabel;
+        private System.Windows.Forms.TextBox AlgTextBox;
+        private System.Windows.Forms.TreeView ResTreeView;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

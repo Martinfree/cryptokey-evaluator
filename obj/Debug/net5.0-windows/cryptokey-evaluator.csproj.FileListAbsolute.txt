@@ -16,3 +16,4 @@ C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Debug\net5.0-windows\ref
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Debug\net5.0-windows\cryptokey-evaluator.pdb
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Debug\net5.0-windows\cryptokey-evaluator.genruntimeconfig.cache
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Debug\net5.0-windows\cryptokey-evaluator.csprojAssemblyReference.cache
+C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Debug\net5.0-windows\cryptokey_evaluator.Properties.Resources.resources

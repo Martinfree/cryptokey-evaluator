@@ -14,23 +14,61 @@ namespace cryptokey_evaluator
     
     public partial class Form1 : Form
     {
+        //attack
         string Attack()
         {
             return "<None>";
         }
-        string AnalyzePass(bool SecretFile, string secret)
+        
+        //find string from one string to other
+        string FindStr(string str, string from, string to)
         {
-            string args = " --find-pass=";
-            string args2 = " --fast-check ";
-
-            if (!SecretFile) args += ".seckey";
-            else args += secret;
+            return str.Substring(str.IndexOf(from) + from.Length, str.IndexOf(to, str.IndexOf(from)) - str.IndexOf(from) - from.Length);
+        }
+        
+        // create mask for str
+        string CreateMask(string secret)
+        {
+            string s = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
+            string mask = "";
+            for (int str = 0; str < secret.Length; str++)
+            {
+                for (char u = 'a'; u <= 'z'; u++) if (secret[str] == u && Char.ToLower(secret[str]) == secret[str] && !Char.IsDigit(secret[str])) mask += "?l";
+                for (char l = 'A'; l <= 'Z'; l++) if (secret[str] == l && Char.ToUpper(secret[str]) == secret[str]) mask += "?u";
+                if (Char.IsDigit(secret[str])) mask += "?d";
+                for (int special = 0; special < s.Length; special++) if (secret[str] == s[special]) mask += "?s";
+            }
+            return "\nMask: " + mask + ".";
+        }
+        
+        //Find password in rockyou.txt and create mask (--find-pass not working)
+        string FindPass(bool SecretFile, string secret)
+        {
+            string args = " --find-pass";
+            string args2 = " --fast-check" + " .hash" + " s" +secret;
 
             AppThread FindPass = new AppThread("powershell.exe ", "api.exe", args);
             AppThread FastCheck = new AppThread("powershell.exe ", "api.exe", args2);
-            //FindFormat.CreateFile(CypherTextBox.Text, ".seckey");
-            return FindPass.Exec() + FastCheck.Exec();
+            FastCheck.CreateFile("hash", ".hash");
+            FindPass.CreateFile(secret, ".seckey");
+
+            return FastCheck.Exec() + FindPass.Exec() + CreateMask(secret);
         }
+
+        // must return: ??? (wait for something)
+        string FastCheck(bool SecretFile, string hash, string secret)
+        {
+            
+            string args2 = " --fast-check" + " .hash" + " .seckey";
+
+            
+            AppThread FastCheck = new AppThread("powershell.exe ", "api.exe", args2);
+            FastCheck.CreateFile(hash, ".hash");
+            
+            return FastCheck.Exec();
+        }
+        
+        // must return list of possible algs. !!!!
         string FindFormat(bool HashFile, string hash)
         {
             string args = " --find-whoami=";
@@ -41,22 +79,33 @@ namespace cryptokey_evaluator
             //FindFormat.CreateFile(CypherTextBox.Text, ".hash");
             return FindFormat.Exec();
         }
+
+        // cracking resitstance must return turple : (<hash data>, ~~<frequency>~~ , <sec key data>, <alg>)
         string CrackingResistance(bool HashFile, bool SecretFile,string hash, string secret, string format)
         {
 
-            string args = " --cracking-resistance ";
-            if (!HashFile) args += "--hash-file=" + ".hash";
+            string args = " --cracking-resistance";
+            if (!HashFile) args += " --hash-file=" + ".hash";
             else args += "--hash-file=" + hash;
-
-            if (!SecretFile) args += " --secret-file " + ".seckey";
-            else args += " --secret-file " + secret;
             if (format != "<None>") args += " --format=" + format;
+            if (!SecretFile) args += " --secret-file=" + ".seckey";
+            else args += " --secret-file " + secret;
             
 
+            
             AppThread CrackingResistance = new AppThread("powershell.exe ", "api.exe", args);
-            //CrackingResistance.CreateFile(CypherTextBox.Text, ".hash");
-            //CrackingResistance.CreateFile(SecretKeyTextBox.Text, ".seckey");
+            if (!HashFile) CrackingResistance.CreateFile(CypherTextBox.Text, ".hash");
+            if (!SecretFile) CrackingResistance.CreateFile(SecretKeyTextBox.Text, ".seckey");
+
+            string HashRes, PassRes;
+            HashRes = CrackingResistance.Exec();
+            PassRes = HashRes;
             return CrackingResistance.Exec();
+
+            /*                FindStr(PassRes, "Password length:", ";") + FindStr(PassRes, "Uppercase:", ";") 
+                            + FindStr(PassRes, "Lowercase:", ";") + FindStr(PassRes, "Numbers:", ";") 
+                            + FindStr(PassRes, "Special:", ";") + FindStr(PassRes, "Possible combinations:", ";"), 
+            */
         }
         string CopyFromTo(string str, string from, string to)
         {
@@ -64,29 +113,42 @@ namespace cryptokey_evaluator
 
             else return "<None>";
         }
-        
-        void TreeView_Writer(int parent_count,int child_count, string str, string local_word)
+        void TreeViewWriteChild(int parent_count, int child_count, string str, string local_word)
         {
-
-            ResultTreeView.Nodes[parent_count].Nodes.Add(local_word);
+            //ResTreeView.Nodes[parent_count].Nodes.Add(local_word);
+            //if (str.Length > 24) ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str.Remove(24) + "...");
+             ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str);
+        }
+        void TreeViewWrite(int parent_count,int child_count, string str, string local_word)
+        {
+            ResTreeView.Nodes[parent_count].Nodes.Add(local_word);
 
             switch (str)
             {
                 case "":
-                    ResultTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add("<None>");
+                    ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add("<None>");
                     break;
                 default:
-                    ResultTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str);
+                    if (str.Length > 24) ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str.Remove(24)+"...");
+                    else ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str);
                     break;
             }
-
-
         }
+        int CyphListView(string hash, string seckey, string algs)
+        { 
+            int a;
+            if (hash.Length > 24 ) a = ResTreeView.Nodes.Add(hash.Remove(24)+"...").Index;
+            else a = ResTreeView.Nodes.Add(hash).Index;
 
+            //TreeViewWrite(a, 0, algs, "Алгоритми");
+            ResTreeView.Nodes[a].Nodes.Add("Дослідження зашифрованого тексту");// (a, 1, "Частотний аналіз",);
+            TreeViewWrite(a, 1, seckey, "таємний ключ");
+           // ResTreeView.EndUpdate();
+            return a;
+        }
         public Form1()
         {
             InitializeComponent();
-            
         }
 
         private void VersionlinkLabel_Click(object sender, EventArgs e)
@@ -109,35 +171,74 @@ namespace cryptokey_evaluator
 
         private void Startbutton_Click(object sender, EventArgs e)
         {
-            //string FormatCheck;
-            //string FastCheck;
-
+            string res;
             if (CypherTextBox.Text == "") return;
             
-            PowerShellTextBox.Text = CrackingResistance(false, false, CypherTextBox.Text, SecretKeyTextBox.Text, "<None>");
-            
-            int a = ResultTreeView.Nodes.Add(CypherTextBox.Text).Index;
-            TreeView_Writer(a, 0, "<None>", "Алгоритми");
-            //TreeView_Writer(a, 1, OpenKeyTextBox.Text, "відкритий ключ");
-            TreeView_Writer(a, 1, SecretKeyTextBox.Text, "таємний ключ");
-
-
+            //PowerShellTextBox.Text = CrackingResistance(false, false, CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text).Item1;
             
 
-            //FastCheck.DeleteFile(".hash");
-            //FastCheck.DeleteFile(".seckey");
-            //.\api.exe --cracking-resistance --hash-file=hash.txt --format=ssh --secret=leonid123
-            //ResultTreeView.Nodes[a].Nodes[2].Nodes.Add(
-            //    FastCheck.Exec()
-            //    );
-
-
+            if (CrackingResRadioButton.Checked)
+            {
+                if (FastCheckBox.Checked && FastCheckBox.Enabled) 
+                { 
+                    //res = FastCheck(false, CypherTextBox.Text, SecretKeyTextBox.Text);
+                    //int number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
+                    //TreeViewWriteChild(number, 0, "Довжина: " + FindStr(res, "Length:", "Algorithm:"), "");
+                    //TreeViewWriteChild(number, 1, "К-сть комбінацій: " + FindStr(res, "Possible combinations:", ";"), "");
+                    //TreeViewWriteChild(number, 1, "Маска для атаки: " + FindStr(res, "Mask:", "."), "");
+                    //ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", "."));
+                    //MarkLabel.Text = FindStr(res, "Mark:", ".");
+                }
+                else
+                {
+                    res = CrackingResistance(false, false, CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
+                    int number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
+                    MarkLabel.Text = FindStr(res, "Mark:", ".");
+                    ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", "."));
+                    TreeViewWriteChild(number, 0, "Алгоритм: " + AlgTextBox.Text, "");
+                    TreeViewWriteChild(number, 0, "Частотний аналіз: " + FindStr(res, "Character   Frequency", "Info about Key:"), "");
+                    TreeViewWriteChild(number, 0, "Довжина: " + FindStr(res, "Length:", "Algorithm:"), "");
+                    TreeViewWriteChild(number, 1, "К-сть комбінацій: " + FindStr(res, "Possible combinations:", ";"), "");
+                }
+                //if (TimeCheckBox.Checked && TimeCheckBox.Enabled) FastCheck(false, SecretKeyTextBox.Text);
+            }
+            else if (FindPassRadioButton.Checked)
+            {
+                res = FindPass(false, SecretKeyTextBox.Text);
+                int number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
+                //TreeViewWriteChild(number, 0, "Довжина: " + FindStr(res, "Length:", "Algorithm:"), "");
+                TreeViewWriteChild(number, 1, "К-сть комбінацій: " + FindStr(res, "Possible combinations:", ";"), "");
+                if (MaskCheckBox.Checked && MaskCheckBox.Enabled) TreeViewWriteChild(number, 1, "Маска для атаки: " + FindStr(res, "Mask:", "."), "");
+                ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", "."));
+                MarkLabel.Text = FindStr(res, "Mark:", ".");
+                //res = FastCheck(false, SecretKeyTextBox.Text);
+            }
+            
+            
         }
 
 
         private void CypherOpenFileButton_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void FindPassRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            CrackingResRadioButton.Checked = !FindPassRadioButton.Checked;
+            FastCheckBox.Enabled = !FindPassRadioButton.Checked;
+            NullCheckBox.Enabled = !FindPassRadioButton.Checked;
+        }
+
+        private void CrackingResRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            FindPassRadioButton.Checked = !CrackingResRadioButton.Checked;
+            MaskCheckBox.Enabled = !CrackingResRadioButton.Checked;
+        }
+
+        private void FastCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            NullCheckBox.Enabled = !FastCheckBox.Checked;
         }
     }
 }

@@ -48,17 +48,23 @@ terminate called after throwing an instance of 'std::logic_error'
   what():  basic_string::_M_construct null not valid
   when no "--format="
   2. No stdout from attacks
+  3. .\api.exe --fast-check .\tets.txt
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+  4. Cypher text length need to be done
+  5. --find-pass not working
+  6. Exit code needed
 ```
-4. v0.4 ( make threads and calls better, make all work 100% correctly with logic) 25.05
+4. v0.4 ( make threads and calls better, make all work 50% correctly with logic) 25.05 ✘ last commit: [9e40b1edc68dea4989a3a133747f999e1028c218](https://github.com/Martinfree/cryptokey-evaluator/commit/9e40b1edc68dea4989a3a133747f999e1028c218)
 
-5. v0.5 (Open file and make all working for several cyph at the same time. api v0.8) 
+5. v0.5 (Need to connect all functions that needed, create new functionality, Open file) 26.05
 
-6. v0.6 (Make config your attack and make hashcat work with you) 25.05
+6. v0.6 (Make config your attack and make UI for hashcat and john attack) 26.05
 
-7. v0.7 (Powershell console) 26.05
+7. v0.7 (Powershell console, add time of work. api v0.8 update, make attack working correctly) 26.05
 
-8. v0.8 (Design cracking-resistance result and make possible to download report) 26.05
+8. v0.8 (Design cracking-resistance result, calculate time to hack, make TreeView with click show and make possible to download report) 27.05
 
-9. v0.9 (build winapi prog with new structure and connect api v 0.9) 27.05
+9. v0.9 (build winapi prog with new structure and connect api v 0.9 ~~several cyph at the same time~~) 27.05
 
 10. v1.0 (all is ready and tested) 27.05

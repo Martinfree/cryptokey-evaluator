@@ -176,7 +176,7 @@ void FastCheck(char* argv[])
             //secret = std::string("found: ") + secret + std::string(" in file: ") + file_name;
             CurrentCyph->AnalyzePass(argv[3]);
 
-            CurrentCyph->InitRes(std::string(argv[2]),
+            CurrentCyph->InitRes(line,
                 std::string(argv[3]),
                 std::string("<None>")
             );
@@ -273,7 +273,7 @@ void CrackingResistance(char* argv[])
     // We need to analyze all the positions: 
     // Cypher text - analyze: length, frequency analysis, find format (optional)
     // Secret key (optional) - analyze key(mark for characters), time to crack possibility to find in
-    // Complex mark and posibility to attack with extended methods
+    // Complex mark and posibility to attack with extended methods 
     std::string hash, format, secret = "";
 
     if (
@@ -327,7 +327,7 @@ void InitApp(char* app, char* args) {
     printf("i useless now");
 }
 
-
+ 
 std::string JohnShowFormat(std::string str) 
 {
     std::string res = "Possible algorithms: \n";

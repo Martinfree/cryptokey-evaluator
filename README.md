@@ -57,7 +57,7 @@ terminate called after throwing an instance of 'std::logic_error'
 ```
 4. v0.4 ( make threads and calls better, make all work 50% correctly with logic) 25.05 ✘ last commit: [9e40b1edc68dea4989a3a133747f999e1028c218](https://github.com/Martinfree/cryptokey-evaluator/commit/9e40b1edc68dea4989a3a133747f999e1028c218)
 
-5. v0.5 (Need to connect all functions that needed, create new functionality) 26.05 ✘
+5. v0.5 (Need to connect all functions that needed, create new functionality) 26.05 ✘ last commit: [8e50c0966a42b85b74beff9b7590e34759704ed7](https://github.com/Martinfree/cryptokey-evaluator/commit/8e50c0966a42b85b74beff9b7590e34759704ed7)
 
 6. v0.6 (Make config your attack and make UI for hashcat and john attack) 26.05
 

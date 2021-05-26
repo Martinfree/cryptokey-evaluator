@@ -61,10 +61,10 @@ terminate called after throwing an instance of 'std::logic_error'
 
 6. v0.6 (Make config your attack and make UI for hashcat and john attack, make attack working) 26.05 ✘ last commit: [93e64816022c61b8285b197f863828bfa59f1fc0](https://github.com/Martinfree/cryptokey-evaluator/commit/93e64816022c61b8285b197f863828bfa59f1fc0)
 
-7. v0.7 (Open file, Powershell console, add time of work, api v0.8 update) 26.05
+7. v0.7 (Powershell console, add time of work, api v0.8 update to main branch) 26.05 ✘ last commit: []()
 
-8. v0.8 (Design cracking-resistance result, calculate time to hack,make attack working correctly, make TreeView with click show and make possible to download report) 27.05
+8. v0.8 (Open file, Design cracking-resistance result, calculate time to hack ) 27.05
 
-9. v0.9 (build winapi prog with new structure and connect api v 0.9 ~~several cyph at the same time~~) 27.05
+9. v0.9 (make TreeView with click show and make possible to download report, build winapi prog with new structure and ~~connect api v 0.9~~ ~~several cyph at the same time~~) 27.05
 
 10. v1.0 (all is ready and tested) 27.05

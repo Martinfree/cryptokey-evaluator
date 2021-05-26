@@ -324,7 +324,7 @@ namespace cryptokey_evaluator
             this.PowerShellTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.PowerShellTextBox.Size = new System.Drawing.Size(496, 203);
             this.PowerShellTextBox.TabIndex = 9;
-            this.PowerShellTextBox.Text = "Hello I\'m your PowerShell like console >";
+            this.PowerShellTextBox.Text = "PS cryptokey-evaluator> wait...";
             this.PowerShellTextBox.Click += new System.EventHandler(this.PowerShellTextBox_Click);
             // 
             // groupBox2

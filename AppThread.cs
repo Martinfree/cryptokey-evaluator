@@ -10,6 +10,7 @@ namespace cryptokey_evaluator
     {
 		System.Diagnostics.Process App;
 		string Result = "";
+		public string cmd;
 		public AppThread(string FileName, string AppName, string args )
 		{
 			App = new System.Diagnostics.Process();
@@ -19,21 +20,7 @@ namespace cryptokey_evaluator
 			App.StartInfo.RedirectStandardOutput = true;
 			App.StartInfo.CreateNoWindow = true;
 			App.StartInfo.UseShellExecute = false;
-
-		}
-		public AppThread(bool external,string FileName, string AppName, string args)
-		{
-			
-			//App = new System.Diagnostics.Process();
-			//App.StartInfo.FileName = FileName;
-			//App.StartInfo.Arguments = AppName + args;
-			//App.StartInfo.UseShellExecute = false;
-			///App.StartInfo.EnvironmentVariables.Add("RedirectStandardOutput", "true");
-			///App.StartInfo.EnvironmentVariables.Add("RedirectStandardError", "true");
-			///App.StartInfo.EnvironmentVariables.Add("UseShellExecute", "false");
-			//App.StartInfo.EnvironmentVariables.Add("CreateNoWindow", "true");
-			//App.StartInfo.UseShellExecute = false;
-
+			cmd = App.StartInfo.Arguments;
 		}
 		public AppThread(bool browser, string url)
 		{
@@ -41,13 +28,13 @@ namespace cryptokey_evaluator
 			App.StartInfo.FileName = "explorer";
 			App.StartInfo.Arguments = url;
 			App.StartInfo.RedirectStandardOutput = true;
+			cmd = App.StartInfo.FileName + App.StartInfo.Arguments;
 			App.Start();
 		}
 		public string Exec()
 		{
-            
 			App.Start();
-			//App.WaitForExit();
+			App.WaitForExit();
 			Result = App.StandardOutput.ReadToEnd();
 			return Result;
 		}
@@ -56,7 +43,6 @@ namespace cryptokey_evaluator
 			System.IO.StreamWriter file = new (name);
 			file.Write(str);
 			file.Close();
-			//return System.IO.Directory.GetCurrentDirectory().Replace("bin\\Debug\\net5.0-windows", "").Replace("\\", "/") + name;
 		}
 		public void DeleteFile(string name)
 		{

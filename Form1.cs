@@ -32,7 +32,19 @@ namespace cryptokey_evaluator
                 return "<None>";
             }
         }
-        
+        void PowerShellBox(bool clean, string cmd)
+        {
+            if (clean)
+            {
+                PowerShellTextBox.Text = "PS cryptokey-evaluator> " + cmd;
+            }
+            else
+            {
+                PowerShellTextBox.AppendText(Environment.NewLine);
+                PowerShellTextBox.Text += cmd;
+            }
+                return;
+        }
         // create mask for str
         string CreateMask(string secret)
         {
@@ -69,7 +81,7 @@ namespace cryptokey_evaluator
             
             
             FindPass.CreateFile(secret, ".seckey");
-
+            PowerShellBox(false,FindPass.cmd);
             return FindPass.Exec() + "|" + CreateMask(secret);
         }
 
@@ -82,7 +94,7 @@ namespace cryptokey_evaluator
             
             AppThread FastCheck = new AppThread("powershell.exe ", "api.exe", args2);
             FastCheck.CreateFile(hash, ".hash");
-            
+            PowerShellBox(false, FastCheck.cmd);
             return FastCheck.Exec();
         }    
 
@@ -95,6 +107,7 @@ namespace cryptokey_evaluator
 
             AppThread FindFormat = new AppThread("powershell.exe ", "api.exe", args);
             FindFormat.CreateFile(CypherTextBox.Text, ".hash");
+            PowerShellBox(false, FindFormat.cmd);
             return FindFormat.Exec() + ".";
         }
 
@@ -118,12 +131,8 @@ namespace cryptokey_evaluator
             string HashRes, PassRes;
             HashRes = CrackingResistance.Exec();
             PassRes = HashRes;
+            PowerShellBox(false, CrackingResistance.cmd);
             return CrackingResistance.Exec();
-
-            /*                FindStr(PassRes, "Password length:", ";") + FindStr(PassRes, "Uppercase:", ";") 
-                            + FindStr(PassRes, "Lowercase:", ";") + FindStr(PassRes, "Numbers:", ";") 
-                            + FindStr(PassRes, "Special:", ";") + FindStr(PassRes, "Possible combinations:", ";"), 
-            */
         }
 
         string CopyFromTo(string str, string from, string to)
@@ -156,11 +165,11 @@ namespace cryptokey_evaluator
         int CyphListView(string hash, string seckey, string algs)
         { 
             int a;
-            if (hash.Length > 24 ) a = ResTreeView.Nodes.Add(hash.Remove(24)+"...").Index;
-            else a = ResTreeView.Nodes.Add(hash).Index;
+            if (hash.Length > 24 ) a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") + hash.Remove(24)+"...").Index;
+            else a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") +hash).Index;
 
             //TreeViewWrite(a, 0, algs, "Алгоритми");
-            ResTreeView.Nodes[a].Nodes.Add("Дослідження зашифрованого тексту");// (a, 1, "Частотний аналіз",);
+            ResTreeView.Nodes[a].Nodes.Add("Дослідження зашифрованого тексту");
             TreeViewWrite(a, 1, seckey, "таємний ключ");
            // ResTreeView.EndUpdate();
             return a;
@@ -194,13 +203,11 @@ namespace cryptokey_evaluator
             int number;
             if (CypherTextBox.Text == "") return;
             
-            //PowerShellTextBox.Text = CrackingResistance(false, false, CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text).Item1;
-            
-
             if (CrackingResRadioButton.Checked)
             {
                 if (FastCheckBox.Checked && FastCheckBox.Enabled) 
                 {
+                    PowerShellBox(true,"wait");
                     string res2 = "";
                     res = FastCheck(false, CypherTextBox.Text, SecretKeyTextBox.Text);
                     number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
@@ -216,6 +223,7 @@ namespace cryptokey_evaluator
                 {
                     if (SecretKeyTextBox.Text != "" && AlgTextBox.Text != "")
                     {
+                        PowerShellBox(true, "wait...");
                         res = FullCrackingResistance(false, false, CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
                         number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
                         MarkLabel.Text = FindStr(res, "Mark:", ".");
@@ -227,6 +235,7 @@ namespace cryptokey_evaluator
                     }
                     else
                     {
+                        PowerShellBox(true, "wait...");
                         if (SecretKeyTextBox.Text.Replace(" ", "") != "")
                         {
                             res += FastCheck(false, CypherTextBox.Text, SecretKeyTextBox.Text);
@@ -234,7 +243,6 @@ namespace cryptokey_evaluator
                         }
                         if (AlgTextBox.Text.Replace(" ", "") == "") res += FindFormat(false, CypherTextBox.Text);
                         number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, FindStr(res, "Possible algorithms:", "."));
-                        
                         
                         int mark = Convert.ToInt16(FindStr(res, "Mark:", "."));
                         
@@ -252,7 +260,7 @@ namespace cryptokey_evaluator
             }
             else if (FindPassRadioButton.Checked)
             {
-                
+                PowerShellBox(true, "wait...");
                 res = FindPass(false, SecretKeyTextBox.Text);
                 res += FastCheck(false, CypherTextBox.Text, SecretKeyTextBox.Text);
                 number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
@@ -302,6 +310,7 @@ namespace cryptokey_evaluator
         {
             FindPassRadioButton.Checked = !CrackingResRadioButton.Checked;
             MaskCheckBox.Enabled = !CrackingResRadioButton.Checked;
+            FindPassCheckBox.Enabled = !CrackingResRadioButton.Checked;
         }
 
         private void FastCheckBox_CheckedChanged(object sender, EventArgs e)

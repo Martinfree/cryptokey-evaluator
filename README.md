@@ -61,7 +61,7 @@ terminate called after throwing an instance of 'std::logic_error'
 
 6. v0.6 (Make config your attack and make UI for hashcat and john attack, make attack working) 26.05 ✘ last commit: [93e64816022c61b8285b197f863828bfa59f1fc0](https://github.com/Martinfree/cryptokey-evaluator/commit/93e64816022c61b8285b197f863828bfa59f1fc0)
 
-7. v0.7 (Powershell console, add time of work, api v0.8 update to main branch) 26.05 ✘ last commit: []()
+7. v0.7 (Powershell console, add time of work, api v0.8 update to main branch) 26.05 ✘ last commit: [5493d27d114a2fcde6feb58870f8d68a6fe5b4e9](https://github.com/Martinfree/cryptokey-evaluator/commit/5493d27d114a2fcde6feb58870f8d68a6fe5b4e9)
 
 8. v0.8 (Open file, Design cracking-resistance result, calculate time to hack ) 27.05
 

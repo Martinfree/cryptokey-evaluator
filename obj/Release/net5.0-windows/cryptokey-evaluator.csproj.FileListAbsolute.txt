@@ -17,3 +17,4 @@ C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Release\net5.0-windows\c
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Release\net5.0-windows\ref\cryptokey-evaluator.dll
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Release\net5.0-windows\cryptokey-evaluator.pdb
 C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Release\net5.0-windows\cryptokey-evaluator.genruntimeconfig.cache
+C:\cryptokey-evaluator\Win32App\cryptokey-evaluator\obj\Release\net5.0-windows\cryptokey_evaluator.AttackForm.resources

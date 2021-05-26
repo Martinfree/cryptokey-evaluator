@@ -309,6 +309,10 @@ namespace cryptokey_evaluator
             TimeCheckBox.Enabled = !FastCheckBox.Checked;
         }
 
-
+        private void AttackButton_Click(object sender, EventArgs e)
+        {
+            AttackForm form = new AttackForm();
+            form.ShowDialog();
+        }
     }
 }

@@ -252,6 +252,7 @@ namespace cryptokey_evaluator
             this.AttackButton.TabIndex = 11;
             this.AttackButton.Text = "Провести атаку";
             this.AttackButton.UseVisualStyleBackColor = true;
+            this.AttackButton.Click += new System.EventHandler(this.AttackButton_Click);
             // 
             // Startbutton
             // 

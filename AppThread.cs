@@ -21,6 +21,20 @@ namespace cryptokey_evaluator
 			App.StartInfo.UseShellExecute = false;
 
 		}
+		public AppThread(bool external,string FileName, string AppName, string args)
+		{
+			
+			//App = new System.Diagnostics.Process();
+			//App.StartInfo.FileName = FileName;
+			//App.StartInfo.Arguments = AppName + args;
+			//App.StartInfo.UseShellExecute = false;
+			///App.StartInfo.EnvironmentVariables.Add("RedirectStandardOutput", "true");
+			///App.StartInfo.EnvironmentVariables.Add("RedirectStandardError", "true");
+			///App.StartInfo.EnvironmentVariables.Add("UseShellExecute", "false");
+			//App.StartInfo.EnvironmentVariables.Add("CreateNoWindow", "true");
+			//App.StartInfo.UseShellExecute = false;
+
+		}
 		public AppThread(bool browser, string url)
 		{
 			App = new System.Diagnostics.Process();
@@ -33,7 +47,7 @@ namespace cryptokey_evaluator
 		{
             
 			App.Start();
-			App.WaitForExit();
+			//App.WaitForExit();
 			Result = App.StandardOutput.ReadToEnd();
 			return Result;
 		}

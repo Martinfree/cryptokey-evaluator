@@ -12,21 +12,56 @@ namespace cryptokey_evaluator
 {
     public partial class AttackForm : Form
     {
-        public AttackForm()
+        public AttackForm(string CypherText, string Format)
         {
             InitializeComponent();
+            CyphTextBox.Text = CypherText;
+            AlgoTextBox.Text = Format;
         }
-        void HashcatAttack()
+        void CreateFile(string str, string name)
         {
-            string args = "";
-            if (CyphTextBox.Text == "") args += " hashcat";
-            else args += CyphTextBox.Text + "hashcat.exe";
+            System.IO.StreamWriter file = new(name);
+            file.Write(str);
+            file.Close();
+            //return System.IO.Directory.GetCurrentDirectory().Replace("bin\\Debug\\net5.0-windows", "").Replace("\\", "/") + name;
         }
-        void JohnAttack()
+        void HashcatAttack(bool BruteForceAttack, bool MaskAttack, bool DictAttack, string cypher, string path,string type = " 0",string mask = " ?a?a?a?a?a?a?a?a", string dict = "include/rockyou.txt")
         {
-            string args = "";
-            if (CyphTextBox.Text == "") args += " john";
-            else args += CyphTextBox.Text + "john.exe";
+            
+            if (path == "") return;
+            string args = " " + path ;
+
+            if (BruteForceAttack) args += " -a 3 -m" +type+ " .hash" + " ?a?a?a?a?a?a?a?a";
+            if (MaskAttack)
+            {
+                args += " -a 3 -m" + type + " .hash" + mask;
+            }
+            if (DictAttack)
+            {
+                args += " -a 3 -m" + type + " .hash" + dict;
+            }
+
+            CreateFile(cypher, ".hash");
+            System.Diagnostics.Process.Start("powershell.exe ", "-NoExit" + args);
+        }
+        void JohnAttack(bool BruteForceAttack, bool MaskAttack, bool DictAttack, string cypher, string mask="?a?a?a?a?a?a?a?a", string dict="include/rockyou.txt")
+        {
+            string args = " john";
+
+            if (AlgoTextBox.Text != "") args += " --format="+AlgoTextBox.Text;
+            //if (CyphTextBox.Text == "") args += " john";
+            if (BruteForceAttack) args += " .hash";
+            if (MaskAttack) 
+            { 
+                args += " --mask=" + mask + " .hash"; 
+            }
+            if (DictAttack) 
+            {
+                args += " --wordlist=" + dict + " .hash";
+            }
+               
+            CreateFile(cypher, ".hash");
+            System.Diagnostics.Process.Start("powershell.exe ", "-NoExit" + args);
         }
         private void HashCatRadioButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -50,12 +85,12 @@ namespace cryptokey_evaluator
             switch (HashCatRadioButton.Checked)
             {
                 case true:
-                    HashcatAttack();
+                    HashcatAttack(BruteForceAttackCheckBox.Checked, MaskAttackCheckBox.Checked, DictAttackCheckBox.Checked, CyphTextBox.Text, PathTextBox.Text);
                     break;
                 case false:
                     if (JohnRadioButton.Checked)
                     {
-                        JohnAttack();
+                        JohnAttack(BruteForceAttackCheckBox.Checked, MaskAttackCheckBox.Checked, DictAttackCheckBox.Checked, CyphTextBox.Text);
                         break;
                     }
                     MessageBox.Show("Виберіть програму для проведення атаки",

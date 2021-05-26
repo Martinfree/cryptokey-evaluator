@@ -41,17 +41,18 @@ namespace cryptokey_evaluator
             this.TextLabel = new System.Windows.Forms.Label();
             this.CyphTextBox = new System.Windows.Forms.TextBox();
             this.AttackButton = new System.Windows.Forms.Button();
+            this.AlgoLabel = new System.Windows.Forms.Label();
+            this.AlgoTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // HashCatRadioButton
             // 
             this.HashCatRadioButton.AutoSize = true;
-            this.HashCatRadioButton.Location = new System.Drawing.Point(13, 13);
+            this.HashCatRadioButton.Location = new System.Drawing.Point(119, 12);
             this.HashCatRadioButton.Name = "HashCatRadioButton";
             this.HashCatRadioButton.Size = new System.Drawing.Size(68, 19);
             this.HashCatRadioButton.TabIndex = 0;
-            this.HashCatRadioButton.TabStop = true;
             this.HashCatRadioButton.Text = "Hashcat";
             this.HashCatRadioButton.UseVisualStyleBackColor = true;
             this.HashCatRadioButton.CheckedChanged += new System.EventHandler(this.HashCatRadioButton_CheckedChanged);
@@ -59,7 +60,8 @@ namespace cryptokey_evaluator
             // JohnRadioButton
             // 
             this.JohnRadioButton.AutoSize = true;
-            this.JohnRadioButton.Location = new System.Drawing.Point(101, 13);
+            this.JohnRadioButton.Checked = true;
+            this.JohnRadioButton.Location = new System.Drawing.Point(10, 12);
             this.JohnRadioButton.Name = "JohnRadioButton";
             this.JohnRadioButton.Size = new System.Drawing.Size(103, 19);
             this.JohnRadioButton.TabIndex = 1;
@@ -163,11 +165,29 @@ namespace cryptokey_evaluator
             this.AttackButton.UseVisualStyleBackColor = true;
             this.AttackButton.Click += new System.EventHandler(this.AttackButton_Click);
             // 
+            // AlgoLabel
+            // 
+            this.AlgoLabel.AutoSize = true;
+            this.AlgoLabel.Location = new System.Drawing.Point(4, 111);
+            this.AlgoLabel.Name = "AlgoLabel";
+            this.AlgoLabel.Size = new System.Drawing.Size(62, 15);
+            this.AlgoLabel.TabIndex = 14;
+            this.AlgoLabel.Text = "Алгоритм";
+            // 
+            // AlgoTextBox
+            // 
+            this.AlgoTextBox.Location = new System.Drawing.Point(72, 108);
+            this.AlgoTextBox.Name = "AlgoTextBox";
+            this.AlgoTextBox.Size = new System.Drawing.Size(266, 23);
+            this.AlgoTextBox.TabIndex = 13;
+            // 
             // AttackForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 270);
+            this.Controls.Add(this.AlgoLabel);
+            this.Controls.Add(this.AlgoTextBox);
             this.Controls.Add(this.AttackButton);
             this.Controls.Add(this.TextLabel);
             this.Controls.Add(this.CyphTextBox);
@@ -200,5 +220,7 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.TextBox CyphTextBox;
         private System.Windows.Forms.Button AttackButton;
         private System.Windows.Forms.CheckBox BruteForceAttackCheckBox;
+        private System.Windows.Forms.Label AlgoLabel;
+        private System.Windows.Forms.TextBox AlgoTextBox;
     }
 }

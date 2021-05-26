@@ -311,7 +311,7 @@ namespace cryptokey_evaluator
 
         private void AttackButton_Click(object sender, EventArgs e)
         {
-            AttackForm form = new AttackForm();
+            AttackForm form = new AttackForm(CypherTextBox.Text, AlgTextBox.Text);
             form.ShowDialog();
         }
     }

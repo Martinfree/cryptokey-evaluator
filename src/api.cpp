@@ -54,6 +54,8 @@ bool StrInCmd(std::string cmd, const char* line);
 
 int main (int argc, char* argv[]){
     
+    char basePath[255] = "";
+    _fullpath(basePath, argv[0], sizeof(basePath));
     
     switch (argc)
     {
@@ -82,8 +84,9 @@ int main (int argc, char* argv[]){
 
     else if (
         StrInCmd(argv[1], "--find-pass=")
-        ) printf("%s.\n",
-            FindInFilePass(std::string("include/rockyou.txt"),format_equal(argv[1], "--find-pass=")).c_str()
+        ) printf("%s.\n", FindInFilePass(
+                std::string(argv[0]).replace(std::string(argv[0]).find("api.exe"), std::string("api.exe").length(), std::string("")).c_str() + std::string("include/rockyou.txt"),
+                format_equal(argv[1], "--find-pass=") ).c_str()
         );
 
 //    else if (
@@ -390,7 +393,8 @@ std::string FindInFilePass(std::string file_name, std::string secret)
 {
     
     //std::ifstream file(file_name, std::ifstream::in);
-    std::ifstream file = OpenFile(file_name);
+    //std::ifstream file = OpenFile(file_name);
+    std::ifstream file(file_name, std::ifstream::in);
     if (
         file.is_open()
         ) {

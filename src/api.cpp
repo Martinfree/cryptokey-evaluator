@@ -13,7 +13,7 @@ In this part you may see:
 // Custom functions
 std::string JohnShowFormat(std::string str);
 std::string FormatInit(std::string str, const char* erase);
-std::string FindPass(std::string file_name, std::string secret);
+std::string FindInFilePass(std::string file_name, std::string secret);
 std::ifstream OpenFile(std::string file_name);
 std::string FindStr(std::string file);
 
@@ -30,6 +30,9 @@ void PrintManual(char* argv[]);
 
 //fast check cypher text
 void FastCheckFormat(char* argv[]); 
+
+//find pass in rockyou
+void FindPass(char* argv[]);
 
 void InitApp(char *app, char* args); 
 // show possible formats
@@ -51,6 +54,8 @@ bool StrInCmd(std::string cmd, const char* line);
 
 int main (int argc, char* argv[]){
     
+    char basePath[255] = "";
+    _fullpath(basePath, argv[0], sizeof(basePath));
     
     switch (argc)
     {
@@ -67,23 +72,27 @@ int main (int argc, char* argv[]){
         ) PrintManual(argv);
 
     else if (
-        std::string(argv[1]).find("--find-whoami=") != std::string::npos && argv[2]
+        StrInCmd(argv[1],"--find-whoami=")// && argv[2]
         ) {
             
         printf(FindWhoAmI(format_equal(argv[1], "--find-whoami=").c_str()).c_str());
     }
 
     else if (
-        std::string(argv[1]).find("--fast-check-format=") != std::string::npos
+        StrInCmd(argv[1],"--fast-check-format=")
         ) FastCheckFormat(argv);
 
     else if (
-        std::string(argv[1]).find("--find-pass=") != std::string::npos
-        ) FindPass(format_equal(argv[1], "--find-pass="), argv[2]);
+        StrInCmd(argv[1], "--find-pass=")
+        ) printf("%s.\n", FindInFilePass(
+                std::string(argv[0]).replace(std::string(argv[0]).find("api.exe"), std::string("api.exe").length(), std::string("")).c_str() + std::string("include/rockyou.txt"),
+                format_equal(argv[1], "--find-pass=") ).c_str()
+        );
 
-    else if (
-        (std::string(argv[1]).find("--find-pass") != std::string::npos)
-        ) FindPass(std::string("include/rockyou.txt"), argv[2]);
+//    else if (
+//        argv[2]
+//        ) 
+//        FindPass(std::string("include/rockyou.txt"), argv[2]);
 
     else if (
         StrInCmd(argv[1], "--fast-check")
@@ -152,9 +161,9 @@ void FastCheckFormat(char* argv[])
 void FindPass(char* argv[])
 {
     printf("%s",
-        FindPass(format_equal(argv[1], "--find-pass="),
-            std::string(argv[2])).c_str()
-    );
+        FindInFilePass(std::string("include/rockyou.txt"),
+            format_equal(argv[1], "--find-pass=")
+        ));
 }
 
 void FastCheck(char* argv[])
@@ -176,7 +185,7 @@ void FastCheck(char* argv[])
             //secret = std::string("found: ") + secret + std::string(" in file: ") + file_name;
             CurrentCyph->AnalyzePass(argv[3]);
 
-            CurrentCyph->InitRes(std::string(argv[2]),
+            CurrentCyph->InitRes(line,
                 std::string(argv[3]),
                 std::string("<None>")
             );
@@ -273,7 +282,7 @@ void CrackingResistance(char* argv[])
     // We need to analyze all the positions: 
     // Cypher text - analyze: length, frequency analysis, find format (optional)
     // Secret key (optional) - analyze key(mark for characters), time to crack possibility to find in
-    // Complex mark and posibility to attack with extended methods
+    // Complex mark and posibility to attack with extended methods 
     std::string hash, format, secret = "";
 
     if (
@@ -327,7 +336,7 @@ void InitApp(char* app, char* args) {
     printf("i useless now");
 }
 
-
+ 
 std::string JohnShowFormat(std::string str) 
 {
     std::string res = "Possible algorithms: \n";
@@ -380,11 +389,12 @@ std::string FindStr(std::string file_name)
     return std::string("");
 }
 
-std::string FindPass(std::string file_name, std::string secret)
+std::string FindInFilePass(std::string file_name, std::string secret)
 {
     
     //std::ifstream file(file_name, std::ifstream::in);
-    std::ifstream file = OpenFile(file_name);
+    //std::ifstream file = OpenFile(file_name);
+    std::ifstream file(file_name, std::ifstream::in);
     if (
         file.is_open()
         ) {
@@ -393,7 +403,7 @@ std::string FindPass(std::string file_name, std::string secret)
             unsigned int curLine = 0; std::getline(file, line); curLine++
             ) {
             if (
-                line.find(secret) != std::string::npos
+                line.find(secret) != std::string::npos && line.length() == secret.length()
                 ) {
                 secret = std::string("found: ") + secret + std::string(" in file: ") + file_name;
                 return secret;

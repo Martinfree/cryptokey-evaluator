@@ -169,8 +169,11 @@ public:
 		
 		printf("Info about Key:\n");
 		
-		if (this->Cyph.length() > 256) printf("SecText: ****************\n");
-		else printf("SecText: %s\n", this->Cyph.c_str());
+		if (this->Cyph.length() > 256) printf("SecText: ****************\nLength: %d\n",
+			this->Cyph.length());
+		else printf("SecText: %s\nLength: %d\n", 
+			this->Cyph.c_str(), 
+			this->Cyph.length());
 		
 		printf("Algorithm: %s\nSecKey: %s\n",
 			(this->Algorithm).c_str(),
@@ -184,7 +187,7 @@ public:
 			(this->AnalyzePassRes[4].c_str()),
 			(this->AnalyzePassRes[5].c_str()));
 		
-		printf("Mark: %f\n",this->ChangeRate(-1, -1));
+		printf("Mark: %f.\n",this->ChangeRate(-1, -1));
 			
 		
 		}

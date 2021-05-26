@@ -49,8 +49,8 @@ Report:
     - Complex mark and posibility to attack with extended methods
 3. Another optimization
 ```
-8. v0.8 [~~???--brute-force-attack --combine--attack --fingerprint-attack???,~~ patch v0.7 problems, possibility to open more than one hash in file, extended methods]
+8. v0.8 [patch v0.7 problems] 27.05
 
-9. v0.9 [Linux.Makefile, Windows.Makefile, more optimization, --help] - readme done 27.05
+9. v0.9 [Linux.Makefile, Windows.Makefile, possibility to open more than one hash in file, extended methods, more optimization, --help] - readme done 27.05
 
 10. v1.0 (all interfaces ready) 

@@ -427,6 +427,6 @@ std::ifstream OpenFile(std::string file_name)
 {
     char path[256];
     getcwd(path, 256);
-    std::ifstream file((std::string(path) + std::string("/") + std::string(file_name)).c_str(), std::ifstream::in);
+    std::ifstream file(std::string(file_name).c_str(), std::ifstream::in);
     return file;
 } 

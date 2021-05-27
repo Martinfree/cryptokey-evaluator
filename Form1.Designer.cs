@@ -35,7 +35,7 @@ namespace cryptokey_evaluator
             this.InputGroupBox = new System.Windows.Forms.GroupBox();
             this.AlgLabel = new System.Windows.Forms.Label();
             this.AlgTextBox = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.SecretOpenFileButton = new System.Windows.Forms.Button();
             this.CypherOpenFileButton = new System.Windows.Forms.Button();
             this.HackManagmentGroupBox = new System.Windows.Forms.GroupBox();
             this.FindPassCheckBox = new System.Windows.Forms.CheckBox();
@@ -80,7 +80,7 @@ namespace cryptokey_evaluator
             // 
             this.InputGroupBox.Controls.Add(this.AlgLabel);
             this.InputGroupBox.Controls.Add(this.AlgTextBox);
-            this.InputGroupBox.Controls.Add(this.button2);
+            this.InputGroupBox.Controls.Add(this.SecretOpenFileButton);
             this.InputGroupBox.Controls.Add(this.CypherOpenFileButton);
             this.InputGroupBox.Controls.Add(this.HackManagmentGroupBox);
             this.InputGroupBox.Controls.Add(this.SecretKeyLabel);
@@ -110,15 +110,16 @@ namespace cryptokey_evaluator
             this.AlgTextBox.Size = new System.Drawing.Size(233, 23);
             this.AlgTextBox.TabIndex = 14;
             // 
-            // button2
+            // SecretOpenFileButton
             // 
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(246, 86);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 23);
-            this.button2.TabIndex = 13;
-            this.button2.UseVisualStyleBackColor = false;
+            this.SecretOpenFileButton.BackColor = System.Drawing.Color.Transparent;
+            this.SecretOpenFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SecretOpenFileButton.Location = new System.Drawing.Point(246, 86);
+            this.SecretOpenFileButton.Name = "SecretOpenFileButton";
+            this.SecretOpenFileButton.Size = new System.Drawing.Size(26, 23);
+            this.SecretOpenFileButton.TabIndex = 13;
+            this.SecretOpenFileButton.UseVisualStyleBackColor = false;
+            this.SecretOpenFileButton.Click += new System.EventHandler(this.SecretOpenFileButton_Click);
             // 
             // CypherOpenFileButton
             // 
@@ -344,6 +345,7 @@ namespace cryptokey_evaluator
             // SecretOpenFileDialog
             // 
             this.SecretOpenFileDialog.FileName = "SecKeyOpenFileDialog";
+            this.SecretOpenFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SecretOpenFileDialog_FileOk);
             // 
             // Form1
             // 
@@ -392,7 +394,7 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.OpenFileDialog SecKeyOpenFileDialog;
         private System.Windows.Forms.Button CypherOpenFileButton;
         private System.Windows.Forms.OpenFileDialog SecretOpenFileDialog;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SecretOpenFileButton;
         private System.Windows.Forms.RadioButton CrackingResRadioButton;
         private System.Windows.Forms.CheckBox MaskCheckBox;
         private System.Windows.Forms.Label AlgLabel;

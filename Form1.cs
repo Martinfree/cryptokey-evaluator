@@ -11,9 +11,68 @@ using System.Windows.Forms;
 
 namespace cryptokey_evaluator
 {
-    
+
     public partial class Form1 : Form
     {
+        string FindNode(TreeNodeMouseClickEventArgs e,int par,int child)
+        {
+            try
+            {
+                return e.Node.Nodes[par].Nodes[child].ToolTipText;
+            }
+            catch
+            {
+                return "<None>";
+            }
+        }
+        /// <summary>
+        /// Create csv file
+        /// </summary>
+        void CreateCsv(string[] NameColumn, string[] ValColumn, string Res, string Conclusions)
+        {
+            string CsvString = "";
+            for (int i = 0; i < NameColumn.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        CsvString += string.Format("{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 1:
+                        CsvString += string.Format("{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 2:
+                        CsvString += string.Format(" ;{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 3:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 4:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 5:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], FindStrW(ValColumn[i], "Довжина:"));
+                        break;
+                    case 6:
+                        CsvString += string.Format(" ;{0};{1}\n", NameColumn[i], ValColumn[i]);
+                        break;
+                    case 7:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], FindStrW(ValColumn[i], "К-сть комбінацій:"));
+                        break;
+                    case 8:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], FindStrW(ValColumn[i], "атаки:"));
+                        break;
+                    case 9:
+                        CsvString += string.Format(" ; ;{0};{1}\n", NameColumn[i], FindStrW(ValColumn[i], "Знайдено в:"));
+                        break;
+                }
+            }
+            CsvString += string.Format("{0}\n{1};{2}\n", Res,"", Conclusions);
+            System.IO.StreamWriter file = new("res.csv");
+            file.Write(CsvString);
+            file.Close();
+            return;
+        }
         /// <summary>
         /// Find string from one string to other
         /// </summary>
@@ -186,18 +245,18 @@ namespace cryptokey_evaluator
                 
                 if (FindStr(res, "in file:", "|") != "<None>" && CalculatePass(SecretKeyTextBox.Text) > 30)
                 {
-                    ResTreeView.Nodes[number].Nodes.Add("Оцінка ключа: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text) - 30));
+                    ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text) - 30));
                     MarkLabel.Text = Convert.ToString(CalculatePass(SecretKeyTextBox.Text) - 30);
                 }
                 else
                 {
-                    ResTreeView.Nodes[number].Nodes.Add("Оцінка ключа: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text)));
+                    ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text))).ToolTipText = Convert.ToString(CalculatePass(SecretKeyTextBox.Text));
                     MarkLabel.Text = Convert.ToString(CalculatePass(SecretKeyTextBox.Text));
                 }
             }
             else
             {
-                ResTreeView.Nodes[number].Nodes.Add("Оцінка ключа: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text)));
+                ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + Convert.ToString(CalculatePass(SecretKeyTextBox.Text))).ToolTipText = Convert.ToString(CalculatePass(SecretKeyTextBox.Text));
                 MarkLabel.Text = Convert.ToString(CalculatePass(SecretKeyTextBox.Text));
             }
         }
@@ -255,7 +314,7 @@ namespace cryptokey_evaluator
             
             TreeViewWriteChild(number, 0, "Можливі Алгоритми: \n" + FindStr(res2, "Possible algorithms:", "."), "");
 
-            ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", "."));
+            ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", ".")).ToolTipText = FindStr(res, "Mark:", ".");
             MarkLabel.Text = FindStr(res, "Mark:", ".");
         }
         /// <summary>
@@ -335,7 +394,7 @@ namespace cryptokey_evaluator
             number = CyphListView(CypherTextBox.Text, SecretKeyTextBox.Text, AlgTextBox.Text);
             
             MarkLabel.Text = FindStr(res, "Mark:", ".");
-            ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", "."));
+            ResTreeView.Nodes[number].Nodes.Add("Оцінка: " + FindStr(res, "Mark:", ".")).ToolTipText = FindStr(res, "Mark:", ".");
             
             TreeViewWriteChild(number, 0, "Алгоритм: " + AlgTextBox.Text, "");
             TreeViewWriteChild(number, 0, "Частотний аналіз: " + FindStr(res, "Character   Frequency", "Info about Key:"), "");
@@ -407,7 +466,7 @@ namespace cryptokey_evaluator
         /// <param name="local_word"></param>
         void TreeViewWriteChild(int parent_count, int child_count, string str, string local_word)
         {
-             ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str);
+             ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str).ToolTipText = str;
         }
         /// <summary>
         /// Write node and add child to him
@@ -418,17 +477,18 @@ namespace cryptokey_evaluator
         /// <param name="local_word"></param>
         void TreeViewWrite(int parent_count,int child_count, string str, string local_word)
         {
-            ResTreeView.Nodes[parent_count].Nodes.Add(local_word);
+            ResTreeView.Nodes[parent_count].Nodes.Add(local_word).ToolTipText = local_word;
+            
 
             switch (str)
             {
                 case "":
-                    ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add("<None>");
+                    ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add("<None>").ToolTipText = "<None>";
                     break;
 
                 default:
-                    if (str.Length > 24) ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str.Remove(24)+"...");
-                    else ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str);
+                    if (str.Length > 24) ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str.Remove(24)+"...").ToolTipText="Too long too show";
+                    else ResTreeView.Nodes[parent_count].Nodes[child_count].Nodes.Add(str).ToolTipText=str;
                     break;
             }
         }
@@ -442,11 +502,18 @@ namespace cryptokey_evaluator
         int CyphListView(string hash, string seckey, string algs)
         { 
             int a;
-            
-            if (hash.Length > 24 ) a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") + hash.Remove(24)+"...").Index;
-            else a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") +hash).Index;
 
-            ResTreeView.Nodes[a].Nodes.Add("Дослідження зашифрованого тексту");
+            if (hash.Length > 24)
+            {
+                a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") + hash.Remove(24) + "...").Index;
+                ResTreeView.Nodes[a].ToolTipText = "Too long too show";
+            }
+            else
+            {
+                a = ResTreeView.Nodes.Add(DateTime.Now.ToString("<dd/MM H:mm>") + hash).Index;
+                ResTreeView.Nodes[a].ToolTipText = hash;
+            }
+            ResTreeView.Nodes[a].Nodes.Add("Дослідження зашифрованого тексту:").ToolTipText = "Дослідження зашифрованого тексту:";
             TreeViewWrite(a, 1, seckey, "таємний ключ");
 
             return a;
@@ -563,6 +630,60 @@ namespace cryptokey_evaluator
             SecretOpenFileDialog.CheckPathExists = true;
             SecretOpenFileDialog.ShowDialog();
             SecretKeyTextBox.Text = "<dir>"+SecretOpenFileDialog.FileName + "\0";
+        }
+
+        private void ResTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            int number;
+            try
+            {
+                number = e.Node.Parent.Index;
+            }
+            catch (Exception ex)
+            {
+                //number = e.Node.Index;
+                CypherTextBox.Text = e.Node.ToolTipText;
+                SecretKeyTextBox.Text = e.Node.Nodes[1].Nodes[0].ToolTipText;
+                AlgTextBox.Text = FindStrW(FindNode(e, 0, 0), "Алгоритм: ");
+                MarkLabel.Text = e.Node.Nodes[2].ToolTipText;
+            }
+            if (ReportCheckBox.Checked)
+            {
+                try
+                {
+                    number = e.Node.Parent.Index;
+                }
+                catch (Exception ex)
+                {
+                    CreateCsv(
+                        new string[]{   "Час",
+                                        "Спосіб перевірки",
+                                        "Шифротекст",
+                                        "Алгоритм",
+                                        "Частотний аналіз",
+                                        "Довжина",
+                                        "Таємний ключ",
+                                        "К-сть Комбінацій",
+                                        "Розрахована маска",
+                                        "Знайдено:"
+                                    },
+                        new string[]{
+                                        FindStr(e.Node.Text,"<",">"),
+                                        "<Method>",
+                                        FindStrW(e.Node.Text,"<"+FindStr(e.Node.Text,"<",">")+">"),
+                                        FindStrW(FindNode(e,0,0), "Алгоритм: "),
+                                        FindNode(e,1,1),
+                                        FindStrW(FindNode(e,0,2), "Довжина: "),
+                                        FindNode(e,1,0),
+                                        FindNode(e,1,1),
+                                        FindNode(e,1,2),
+                                        FindNode(e,1,3),
+                                    },
+                                        MarkLabel.Text = e.Node.Nodes[2].ToolTipText,
+                                        ""
+                       );
+                }
+            }
         }
     }
 }

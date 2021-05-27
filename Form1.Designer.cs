@@ -59,6 +59,7 @@ namespace cryptokey_evaluator
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CypherOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SecretOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ReportCheckBox = new System.Windows.Forms.CheckBox();
             this.InputGroupBox.SuspendLayout();
             this.HackManagmentGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,6 +79,7 @@ namespace cryptokey_evaluator
             // 
             // InputGroupBox
             // 
+            this.InputGroupBox.Controls.Add(this.ReportCheckBox);
             this.InputGroupBox.Controls.Add(this.AlgLabel);
             this.InputGroupBox.Controls.Add(this.AlgTextBox);
             this.InputGroupBox.Controls.Add(this.SecretOpenFileButton);
@@ -284,8 +286,10 @@ namespace cryptokey_evaluator
             // 
             this.ResTreeView.Location = new System.Drawing.Point(7, 280);
             this.ResTreeView.Name = "ResTreeView";
+            this.ResTreeView.ShowNodeToolTips = true;
             this.ResTreeView.Size = new System.Drawing.Size(325, 225);
             this.ResTreeView.TabIndex = 5;
+            this.ResTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResTreeView_NodeMouseDoubleClick);
             // 
             // label1
             // 
@@ -347,6 +351,16 @@ namespace cryptokey_evaluator
             this.SecretOpenFileDialog.FileName = "SecKeyOpenFileDialog";
             this.SecretOpenFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SecretOpenFileDialog_FileOk);
             // 
+            // ReportCheckBox
+            // 
+            this.ReportCheckBox.AutoSize = true;
+            this.ReportCheckBox.Location = new System.Drawing.Point(7, 248);
+            this.ReportCheckBox.Name = "ReportCheckBox";
+            this.ReportCheckBox.Size = new System.Drawing.Size(118, 19);
+            this.ReportCheckBox.TabIndex = 16;
+            this.ReportCheckBox.Text = "Download Report";
+            this.ReportCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -402,6 +416,7 @@ namespace cryptokey_evaluator
         private System.Windows.Forms.TreeView ResTreeView;
         private System.Windows.Forms.CheckBox TimeCheckBox;
         private System.Windows.Forms.CheckBox FindPassCheckBox;
+        private System.Windows.Forms.CheckBox ReportCheckBox;
     }
 }
 

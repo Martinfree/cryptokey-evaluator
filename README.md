@@ -65,6 +65,6 @@ terminate called after throwing an instance of 'std::logic_error'
 
 8. v0.8 (Open file, Design cracking-resistance result, ~~calculate time to hack~~ ) 27.05 ✘ last commit: [5193bd56b41554616ebcab9d42071b619b3fa372](https://github.com/Martinfree/cryptokey-evaluator/commit/5193bd56b41554616ebcab9d42071b619b3fa372)
 
-9. v0.9 (make TreeView with click show and make possible to download report, build winapi prog with new structure and ~~connect api v 0.9~~ ~~several cyph at the same time~~) 27.05
+9. v0.9 (make TreeView with double click show, make possible to download report ) 27.05 ✘
 
-10. v1.0 (all is ready and tested) 27.05
+10. v1.0 (new design, build winapi prog with new structure, info buttons, all is ready and tested ~~connect api v 0.9~~ ~~several cyph at the same time~~) до 17.06

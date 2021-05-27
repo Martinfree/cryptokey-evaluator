@@ -63,7 +63,7 @@ terminate called after throwing an instance of 'std::logic_error'
 
 7. v0.7 (Powershell console, add time of work, api v0.8 update to main branch) 26.05 ✘ last commit: [5493d27d114a2fcde6feb58870f8d68a6fe5b4e9](https://github.com/Martinfree/cryptokey-evaluator/commit/5493d27d114a2fcde6feb58870f8d68a6fe5b4e9)
 
-8. v0.8 (Open file, Design cracking-resistance result, ~~calculate time to hack~~ ) 27.05
+8. v0.8 (Open file, Design cracking-resistance result, ~~calculate time to hack~~ ) 27.05 ✘ last commit: [5193bd56b41554616ebcab9d42071b619b3fa372](https://github.com/Martinfree/cryptokey-evaluator/commit/5193bd56b41554616ebcab9d42071b619b3fa372)
 
 9. v0.9 (make TreeView with click show and make possible to download report, build winapi prog with new structure and ~~connect api v 0.9~~ ~~several cyph at the same time~~) 27.05
 
